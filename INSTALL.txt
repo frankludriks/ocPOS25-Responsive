@@ -1,0 +1,38 @@
+=============================================
+Upgrade Instructions:
+=============================================
+Already using a previous version of the Point of Sale?  Upgrading is a piece of cake.  See the details in UPGRADING.txt
+ 
+
+=============================================
+Installation Instructions:
+=============================================
+
+1 - UPLOAD
+Header.zip used to be an encoded binary file. It is no longer binary, but is still named header.zip because include references in various areas of the code have not yet been cleaned up.
+	
+2 - CONFIGURE
+Open "includes/db.php" and update the variables with the connection information for your osCommerce, ZenCart, or CRELoaded database. Be sure to specify the license number you received at the time of purchase.  OllaCart Point of Sale will not function properly without this license.
+
+If you are using prefixes on your database tables (i.e. you have purposely named your database tables something like mystore_products or mystore_customers instead of the standard products and customers tables) then be sure to set that table prefix prefix in $table_prefix in includes/db.php.  
+
+Review other options in includes/db.php, adjusting values as documented to suit your needs. If using Authorize.Net as your payment gateway, be sure to enter your Authorize.Net API login ID and Transaction Key (available after logging in to your Authorize.Net account) in the following values:
+  $auth_net_api_login_id
+  $auth_net_transaction_key
+
+
+3 - PERMISSIONS
+Change the permissions on the files in the "graphs" directory to 777.
+
+
+4 - Access your newly installed ocPOS system in your browser.  If your domain name were www.mydomain.com, and you'd uploaded the ocPOS files to the "pos" directory, then you'd browse to http://www.mydomain.com/pos.  The first access will redirect you to http://www.mydomain.com/pos/install.php to extend the database as needed.  If for some reason the database extensions fail, please check your database settings in the pos/includes/db.php configuration file, including the database prefix setting, then browse to http://www.mydomain.com/pos/install.php once again.
+
+5 - Delete or rename install.php.
+
+
+Finished! Open up your browser and go to the URL where you placed the OllaCart Point of Sale files. You now have a fully functional POS tied into your existing osCommerce database.
+
+You should now shortly receive an email with a key.php.  If you upload this to the main OllaCart POS directory (the same directory as action.php) then your installation will no longer need to contact the licensing server.
+
+
+A change log can be found in CHANGES.txt.

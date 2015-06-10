@@ -1,0 +1,175 @@
+Changes since 2.1 Pro:
+=======================
+removed remote license validation requirement
+removed PHPAudit license requirement for authorizenet_aim.php
+removed ioncube encoding from authorizenet_aim.php and header.zip
+renamed header.zip to header.php
+change: in-file copyright date updated
+change: non-inventory items are no longer included in archived orders
+change: include file path in cookie function when ocPOS is running on localhost.  This makes it easier to run different versions of ocPOS from different directories on localhost.
+change: if QTP attribute mode enabled but QTP is not installed, exit with error
+change: sort the db.php options into various categories/sections
+
+fix: fixed support for osC attributes even when QT Pro is not installed
+fix: multi-lang issue in product_adjust_price.php and product_popup.php
+fix: customer_edit.php sanitize customers_id field
+fix: customer_edit.php verify correct zone name, country name prior to entering into address book
+fix: product search no longer removes leading zeroes from search string
+fix: fixed some rounding issues that could cause tax and order total miscalculations
+
+Enhancement: split payments
+Enhancement: separate shipping and billing address
+Enhancement: customer_new.php:  added "use secondary address" option
+Enhancement: return/exchange orders
+Enhancement: shipping fees (NOT a shipping module, no rate quotes, just add your own fee for shipping)
+Enhancement: restocking fees
+Enhancement: link to osCommerce Admin invoice
+Enhancement: autofocus and "enter" support on some forms
+Enhancement: day of week filter in hourly reporting
+Enhancement: added support for USB credit card reader/swiper in authorizenet_aim.php
+Enhancement: removed requirement for SSL on authorizenet_aim.php if using localhost
+Enhancement: verify that new or edited customer does not have the same email address as existing customer
+Enhancement: option to auto-capitalize names when creating new customer
+Enhancement: javascript alert if trying to add new customer without required fields
+Enhancement: option to display product image on product.php
+Enhancement: added credit card consistency checker to authorizenet_aim.php
+Enhancement: option to display product description in product.php
+Enhancement: added support for compound taxes (multiple taxes with different priorities)
+Enhancement: automatic form submission selecting an order or reporting type from the header drop-down.  Go button consequently commented out.  Uncomment if using browsers that do not support javascript.
+Enhancement: login system added with Admin and non-Admin users.
+ *** NOTE:  When you login, if that same user is logged in on another web browser, that other login will get automatically logged out.  A user can only be logged in from one browser at a time.  If you need multiple people or multiple browsers in use at the same time, you will need to create additional users.
+
+
+Changes since version 2.0 Standard
+===================================
+ 1 - Enhancement:  Support for QT Pro product attribute stock levels has been added.  Configure in db.php.
+ 2 - Enhancement:  Added support for multiple tax classes/rates
+ 3 - Enhancement:  Added ability to sell products currently with zero quantity.  Configure in db.php.
+ 4 - Enhancement:  customer_edit.php now can set the customer country.  ISO codes or zone abbreviations (i.e. CA for California, AM for Armenia) are also allowed in lieu of complete spelling (case sensitive) of the country or zone name.
+ 5 - Enhancement:  Added Return/Exchange order type.  When using a Return/Exchange order, all normal products "added" to the cart will be added in negative quantities unless manual quantity adjustment is made.
+ 6 - Enhancement:  When creating/editing a customer, an error is given if the email address is already in use with another customer
+ 7 - Enhancement:  Added ability to adjust product price by percentage rather than just a fixed amount
+ 8 - Enhancement:  Added French language files 
+ 9 - Enhancement:  Added the Suburb field to the customer screens
+10 - Enhancement:  install.php now checks for Apache web server, warns if not Apache.  
+11 - Enhancement:  install.php now checks for Microsoft IIS web server, warns if IIS. 
+12 - Enhancement:  Added an option to includes/db.php reverse-sort items in the order listing, sort by either newest to oldest in cart or oldest to newest.
+13 - Enhancement:  Switched from order comments to use of the order status history.  This is a much better way to do it.
+14 - Enhancement:  Added an option to db.php to limit order history report to in-store orders (else include all orders)
+15 - Enhancement:  Added information to db.php on how to change the time zone of your ocPOS installation
+16 - Enhancement:  Voided orders are now shown in red in the reports.  They are no longer included in invoice report order totals.
+
+ 1 - Fix:  Some reports were limited to in-store orders only, while other reports would show all orders.
+ 2 - Fix:  Quotes are now allowed in customer names and product names when editing or searching.
+ 3 - Fix:  Fixed a minor tax title formatting issue
+ 4 - Fix:  Removed background image from receipt
+ 6 - Fix:  Minor formatting cleanup on receipt 
+ 7 - Fix:  Product names and descriptions could be displayed in English even when another language was selected.
+ 8 - Fix:  Sort_order values for Order total values (subtotal, tax, total, etc) are now read from the database rather than being hard coded.
+ 9 - Fix:  Removed background image from receipt.php
+10 - Fix:  Was writing the final_price to orders_products.products_price rather than the products_price.
+11 - Fix:  Voided and Completed In Store statuses now auto-create in proper language
+12 - Fix:  Could have an issue viewing certain customers if a customer that has an address_book.entry.zoneid of 0.  This happened mostly with customers who did not have the "State" field filled out in their default address book entry.
+13 - Fix:  Changed order_void.php to not mark the voided-in-store order status entry as having notified the customer (the customer does not get notified -- this has not changed).
+14 - Fix: orders.cc_number now stores XXXXXXXXXXXX1234 (where 1234 is the last 4 digits of cc_number).  orders.paymentmethod no longer stores the cc last 4 digits.
+15 - Fix:  Un-archiving orders that contained non-inventory items did not properly restore the non-inventory Items
+16 - Fix:  Misc fixes to install.php where it could seem like a database schema worked when it had actually failed.
+17 - Fix:  Orders could not be completed if the order total was 0.00.
+  
+
+Changes since version 1.6:
+===========================
+ 1 - Enhancement:  Added ability to increase in-store prices by a configurable percentage.  I.e. sell products in-store at a slight markup versus the osCommerce price.  Configure in db.php.
+ 2 - Enhancement:  Added multi-language structure and Norwegian, English, Spanish language files.  Language configured in db.php.
+ 3 - Enhancement:  Added payment method to receipt, last 4 digits of credit card number if payment was made via credit card
+ 4 - Enhancement:  Can now discount individual orders by percentage or by fixed amount.
+ 5 - Enhancement:  Comments now show up on order summary even prior to finalizing checkout.
+ 6 - Enhancement:  Product search can be configured to require exact match or partial match for the product model.  Partial match is still done for the product name.  Configure in db.php.
+ 7 - Enhancement:  Buttons now have mouseover titles.
+ 8 - Enhancement:  In-store orders not associated with a specific customers are now recorded with a default In-Store Customer name.  Configure in db.php.
+ 9 - Enhancement:  Added ocPOS payment method to order history report
+10 - Enhancement:  Searching with asterisks is now supported.  Asterisks are not necessary, but will work.
+11 - Enhancement:  Non-Inventory button no longer appears unless there is a current order to which the the non-inventory item can be added.
+12 - Enhancement:  When an item sells out in ocPOS (i.e. in-stock quantity reaches 0) the store administrator can recieve an email notification.  Configure in db.php.
+13 - Enhancement:  In main range report (report.php), when including website orders in the report, the report now shows shipping costs.
+14 - Enhancement:  Orders can now be permanentely deleted via ocPOS rather than just marked as void.  Configure in includes/db.php.
+15 - Enhancement:  New customers can optionally be emailed their new account information, including the password to order online.  A password will be automatically created for them if one is not specified when creating the user.  Configure in includes/db.php.
+16 - Enhancement:  Default In-Store Customer account is now automatically created.  This account is used for orders where no user is assigned.
+17 - Enhancement:  Product Search results page now provides option to create new order with a selected product if an order has not already been created.
+18 - Enhancement:  Customer Search results page now provides option to assign selected customer to a new order if an order has not already been created.
+19 - Enhancement:  Product searching can now either require ALL terms to be part of the product name, or ANY of the terms to be in the product name.  Configure in includes/db.php.
+20 - Enhancement:  Larger more attractive css-driven buttons.  A bit easier for touch screens.
+21 - Enhancement:  Added a basic installer to make the necessary database extensions.
+22 - Enhancement:  Customer accounts can now be edited via ocPOS.
+
+
+ 1 - Fix:  Could not clear order comments.
+ 2 - Fix:  Bug in reporting that caused sales due to non-inventory items to be displayed incorrectly.
+ 3 - Fix:  Address and billing information were not written to the database when completeing an order.  This would cause web store invoices to have blank customer information.
+ 4 - Fix:  Bug that would not write customer data with an order if the customer had no 'State' in their address.  This is more common in non-USA addresses.
+ 5 - Fix:  When adding a non-inventory item to an order, required fields are now correctly marked as required.
+ 6 - Fix:  Currency was still hardcoded to USD in some places
+ 7 - Fix:  Non-inventory items could contribute inappropriately toward an order's tax total
+ 8 - Fix:  Tax is calculated per line item instead of by entire order.  Items marked as non-taxable in the database no longer add to an order's taxable total.
+ 9 - Fix:  Reporting not always correctly tallying Credit Card orders
+10 - Fix:  Order History pagination only showed the first page of orders
+11 - Fix:  Simplified configuration required to use database table prefixes.
+12 - Fix:  not all customer fields would get created properly resulting in errors in the osC Admin customer area
+13 - Fix:  code cleanup.  More code clean up in-progress.
+14 - Fix:  Taxes are now calculated as a sum of individual line-item taxes rather than a specific tax rate being applied to an entire order.  More tax work needs to be done to support cumulative tax rates.
+15 - Fix:  Added products.products_prid field when needed for compatability with ZenCart
+16 - Fix:  Tax classes can be deleted in osCommerce without de-associating those tax classes from products.  While this causes taxes not to be applied in osCommerce, taxes were still being applied in ocPOS.  This has been fixed.
+17 - Fix:  Tax lookups did not work properly if store is using database table prefixes
+18 - Fix:  Product searches were limited to 4 search terms.  In certain situations, the product search would return the entire product catalog rather than the proper search results.
+
+
+
+Changes since version 1.5:
+===========================
+1  - Improved Windows support
+2  - Improved PHP 5, MySQL 5 support
+3  - Specials were not displayed properly in product.php and product_edit.php
+4  - Can now create / edit specials in product_edit.php
+5  - normalize table displays in product editing pages 
+6  - renamed "Sale Price" to "Special Price" to match osCommerce/ZenCart wording
+7  - cosmetic improvements to reporting
+8  - fixed issue where local key would not work, resulting in ocPOS unnecessarily requiring internet connection to licensing server
+9  - renamed header.php to header.zip to avoid getting FTP uploaded in ASCII mode and thereby corrupting the file
+10 - reduced package size by only including ioncube loaders for Win32, Linux and FreeBSD.  Other loaders can be downloaded from http://www.ioncube.com/loaders.php.
+11 - Updated ioncube loaders with versions from Jan 20, 2007.
+12 - subtotal and tax values were not always getting written properly to the database
+13 - orders with negatively-priced non-inventory item can now be accurately processed
+
+
+Changes since version 1.4:
+===========================
+1 - Specials now correctly priced
+2 - Non-taxable items can now be added to orders
+3 - Can sell items in-store even if they are disabled on website.  Configurable in includes/db.php.
+4 - New & easier to change store name and logo
+5 - Order Reports now broken down by check, cash, and credit card
+6 - Product Model is no longer required to add a non-inventory product to an order
+7 - Customer accounts created with Point of Sale were not always functioning correctly on the osCommerce website
+8 - Non-inventory products were not always allowing quantity adjustments
+
+
+Changes since version 1.3:
+===========================
+1 - HTML title of web pages now named <Store Name> Point of Sale
+2 - Email address and password are no longer required when creating a new customer from the Point of Sale interface
+3 - Added license decodes for additional operating systems.  Decoders now included for Linux, Windows, OSX, FreeBSD 4, NetBSD, OpenBSD, and Solaris.
+4 - Comments placed during Point of Sale order are now viewable from osCommerce Admin, not just from the Point of Sale interface
+5 - The database table names are now abstracted into includes/db_tables.php .  This means that if you are using other database table prefixes (feature of ZenCart, add-on for osCommerce and others) that you can configure these prefixes in db_tables.php to allow OllaCart Point of Sale to read the tables properly.
+6 - Receipts now auto-print after checkout.  Receipt auto-print will only occur at the conclusion of the checkout.  Viewing receipts under any other circumstance will not auto-print the receipt.
+7 - Currency symbol is now read from the osCommerce (or ZenCart, etc) database rather than being hardcoded to the $ symbol
+8 - When creating a new customer, state field is now populated with the store's default state 
+9 - POS purchases were not correctly updating the products_ordered field in the products table.  This field is used by the "Best Products Purchased" report in osCommerce.  It is not used to keep track of inventory.  This bug did not affect the inventory counts.
+10 - SQL statements to add to the order_status_history table failed in some cases
+11 - Removed reporting dependency on existence of a contribution that is not part of stock osCommerce code
+12 - Replaced expiring header.php with non-expiring header.php
+13 - Fixed HTML syntax issues caused by misplacement of header
+14 - The product edit screen no longer says "successfully edited" before an edit has occured
+15 - Fixed "Warning: mysql_fetch_assoc(): supplied argument is not a valid MySQL result resource" during checkout
+16 - Fixed "Warning: mysql_fetch_assoc(): supplied argument is not a valid MySQL result resource" on report_days.php and report_hours.php
+17 - parse error when recording payment via check
+18 - When the value for order total, subtotal, or tax ends in a zero (i.e. $230.00) the value gets formatted without the trailing zeros, while maintaining the correct value (i.e. $230 rather than $230.00)

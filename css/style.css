@@ -1,0 +1,147 @@
+body {
+  #background-color: #FFFFFF; 
+  background-image: url(../images/bg-marble.jpg);
+  margin-right:0px; 
+  margin-left:0px; 
+  margin-top:0px; 
+  margin-bottom:0px;
+  font-family: Arial, Tahoma, Verdana, Trebuchet MS;  
+  font-size: 11px;  
+  color: #000000; 
+  font-weight: normal; 
+  text-decoration: none 
+}
+
+.tableBorder { border-left: 1px; border-right: 1px; border-top: 1px; border-bottom: 1px; border-color: #000000; border-style: solid;}
+.tableGrid { background-color: #000000; }
+
+td {font-family: Arial, Tahoma, Verdana, Trebuchet MS;  font-size: 11px;  color: #000000; font-weight: normal; text-decoration: none }
+.tdReceipt {font-family: Times New Roman, Arial, Tahoma, Verdana, Trebuchet MS;  font-size: 9pt;  color: #000000; font-weight: normal; text-decoration: none }
+.tdGrid {background-color: #FFFFFF; }
+.tdBlack {background-color: #000000; }
+.tdBlue {background-color: #D4E3F1; }
+.tdAqua {background-color: #00FFFF; }
+.tdRed {background-color: #e7cac9; }
+.tdOlive {background-color: #D7ECA0; }
+.tdHeader, .tdHeader2{background-color: #D0D0D0; }
+.tdHeader2 {border-left: 0px; border-right: 0px; border-top: 1px; border-bottom: 1px; border-color: #000000; border-style: solid; }
+.tdDoc {font-size: 13px; }
+.form_required {color: red; font-weight: bold;}
+
+
+a:link 		{color: #3552AD; font-weight: bold; text-decoration: Underline }
+a:visited 	{color: #808080; font-weight: bold; text-decoration: Underline }
+a:active	{color: #000000; font-weight: bold; text-decoration: Underline }
+a:hover  	{color: #104361; font-weight: bold; text-decoration: Underline }
+
+a.receipt:link,a.receipt:visited,a.receipt:active,a.receipt:hover {color: #3552AD; font-weight: bold; text-decoration: Underline }
+SPAN.productSpecialPrice {
+  font-family: Verdana, Arial, sans-serif;
+  color: #ff0000;
+}
+
+span.failure {color: red; font-weight: bold; font-size:12px;}
+
+input,textarea {font-size:11px;}
+select {font-size:8pt;}
+
+a.headerbutton {
+	-moz-box-shadow:inset 0px 1px 0px -17px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px -17px #ffffff;
+	box-shadow:inset 0px 1px 0px -17px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+        -khtml-border-radius:10px;
+	border-radius:10px;
+        behavior: url(css/bordeasdfr-radius.htc);
+        position: relative;
+	border:1px solid #B0B0B0;
+	display:inline-block;
+	color:#222222;
+	font-family:arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:2px 8px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}
+a.button {
+	-moz-box-shadow:inset 0px 1px 0px -17px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px -17px #ffffff;
+	box-shadow:inset 0px 1px 0px -17px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+        -khtml-border-radius:10px;
+	border-radius:10px;
+        behavior: url(css/bordeasdfr-radius.htc);
+        position: relative;
+	border:1px solid #B0B0B0;
+	display:inline-block;
+	color:#222222;
+	font-family:arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:4px 15px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}
+a.button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}
+a.button:active {
+	position:relative;
+	top:1px;
+}
+a.button-disabled {
+	-moz-box-shadow:inset 0px 1px 0px -17px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px -17px #ffffff;
+	box-shadow:inset 0px 1px 0px -17px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+        -khtml-border-radius:10px;
+	border-radius:10px;
+        behavior: url(css/boarder-radius.htc);
+        border:1px solid #B0B0B0;
+	display:inline-block;
+	color:#999999;
+	font-family:arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:4px 15px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}
+a.button-disabled:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#999999;
+    color:#999999;
+}
+/* This imageless css button was generated by CSSButtonGenerator.com */
+
+
+.success {
+    font-weight: bold;
+    color:green;
+}
+
+.error {
+    font-weight: bold;
+    color:red;
+}

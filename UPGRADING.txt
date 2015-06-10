@@ -1,0 +1,22 @@
+Already using a previous version of the Point of Sale?  Upgrading is a piece of cake.  Using http://www.example.com as an example, follow these steps and you'll be done in no time:
+
+1)  Upload version 2.1 Pro to a new directory on your web server.  As an example, upload version 2.1 to http://www.example.com/ocpos2 .
+2)  Edit the includes/db.php settings in your previous installation.  Copy the database name and account information to the new includes/db.php file.  
+3)  If you are using database table prefixes, add the prefix to the $table_prefix setting in includes/db.php.
+    -- FYI:  The database table prefix was configured in includes/db_tables.php in previous versions of ocPOS.
+3)  Examine the new settings in includes/db.php.  Make adjustments to those settings as necessary.
+4)  If you have edited the stylesheet (style.css) in your current installation, you can use that one.  There are only a few things you'll need to add to your current style.css before you can copy it over to the new ocpos2 directory.  These new items are listed below, under the STYLESHEET CHANGES heading.
+5)  If you have edited your includes/custom_header.php, go ahead copy it over to your new ocpos2 installation directory.
+6)  If you have edited your includes/footer.php, you can make a slight addition and then copy it to your new ocpos2 installation.  All you need is to add the following lines in between the license area and the very first ?> (so it's in the PHP code area):
+   if (file_exists("includes/lang/$lang/includes/footer.php")) {
+      include("includes/lang/$lang/includes/footer.php");
+   }
+7)  Change the permissions on the "graphs" directory to 777.
+8) Open the new ocpos2 installation in your web browser (i.e. http://www.example.com/ocpos2).  The system will automatically run install.php and attempt to extend the database schema.  The following one will be done, as the previous ones should have already been done in the previous installation of ocPOS.
+
+9)  Access your newly installed ocPOS system in your browser.  If your domain name were www.mydomain.com, and you'd uploaded the ocPOS files to the "pos" directory, then you'd browse to http://www.mydomain.com/pos.  The first access will attempt to extend the database as needed.  If for some reason the database extensions fail, run the SQL statements in database_mods.sql against your database using a tool like phpMyAdmin.
+
+10) Delete or rename install.php.
+
+
+Done!  Enjoy your new OllaCart Point of Sale 2.1 Pro system.  Feel free to contact us with any problems or questions.
