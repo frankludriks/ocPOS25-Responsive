@@ -1244,7 +1244,7 @@ class Order {
     function PrintFull($Checkout) {
 
         if ($_SESSION['Orders'][$_SESSION['CurrentOrderIndex']]->ReturnOrder) {
-            echo('<center><b><font size="3" color="#FF5A00">' . RETURN_EXCHANGE . '</font></b></center>');
+            echo('<div class="alert alert-info text-center" role="alert">' . RETURN_EXCHANGE . '</div>');
         }
         ?>
         <script type="text/javascript">
@@ -1260,24 +1260,23 @@ class Order {
             }
             // -->
         </script>
-
-        <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
-            <tr>
-                <td width="100%" colspan="6" class="tdBlue" align="center">
-                    <b><?php $_SESSION['Orders'][$_SESSION['CurrentOrderIndex']]->PrintHeader(); ?></b>
-                </td>
-            </tr>
+		//TABLE START
+        
+            <div class="panel panel-primary">
+					 <div class="panel-heading text-center"><?php $_SESSION['Orders'][$_SESSION['CurrentOrderIndex']]->PrintHeader(); ?></div>
+						<div class="panel-body">
+		<table class="table table-striped">
         <?php if (!$Checkout) { ?>
+			
                 <tr height="45px">
                 <form name="AddProductOrder" action="action.php" method="get">
                     <input type="hidden" name="Action" value="AddItem">
                     <input type="hidden" name="Quantity" value="1">
                     <td width="100%" colspan="6" class="tdHeader" align="center">
                         <input type="text" name="ProductQuery" size="20">
-                        <a class="button" title="<?php echo ADD_ITEM_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); document.AddProductOrder.submit();"><span><?php echo ADD_ITEM; ?></span><input type="hidden" value="<?php echo ADD_ITEM; ?>"></a>
-                        <a class="button" title="<?php echo NON_INVENTORY_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='product_noninventory.php'"><span><?php echo NON_INVENTORY; ?></span><input type="hidden" value="<?php echo NON_INVENTORY; ?>"></a>
-                        &nbsp; &nbsp;&nbsp;
-                        <a class="button" title="<?php echo DISCOUNT_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='order_discount.php?method=<?php echo ($this->DiscountMethod); ?>&value=<?php echo ($this->DiscountValue); ?>'" style="font-weight: bold; color: #EF5400"><span><?php echo DISCOUNT; ?></span></a>
+						<a href="#" class="btn btn-default" role="button" onclick="this.blur(); document.AddProductOrder.submit();"><?php echo ADD_ITEM; ?><input type="hidden" value="<?php echo ADD_ITEM; ?>"></a>
+                        <a href="#" class="btn btn-default" role="button" onclick="this.blur(); window.location.href='product_noninventory.php'"><?php echo NON_INVENTORY; ?></span><input type="hidden" value="<?php echo NON_INVENTORY; ?>"></a>
+                        <a href="#" class="btn btn-danger" role="button" onclick="this.blur(); window.location.href='order_discount.php?method=<?php echo ($this->DiscountMethod); ?>&value=<?php echo ($this->DiscountValue); ?>'"><?php echo DISCOUNT; ?></a>
                     </td>
                 </form>
             </tr>
@@ -1401,7 +1400,7 @@ class Order {
                         // print_r($this->Items[$key]);
                         if (!$Checkout) {
                             ?> &nbsp; &nbsp;
-                            <a href="javascript:popupWindow('product_adjust_price.php?Index=<?php echo($key); ?>',500,160)"><img src="images/price.gif" width="11" height="11" border="0" alt="<?php echo ADJUST_PRICE; ?>" title="<?php echo ADJUST_PRICE; ?>"></a>
+                            <a href="javascript:popupWindow('product_adjust_price.php?Index=<?php echo($key); ?>',500,160)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <?php } ?>
                     </td>
                     <td width="100" align="right"<?php
@@ -1418,10 +1417,10 @@ class Order {
                             }
                             if (!$Checkout) {
                                 ?> &nbsp; &nbsp;
-                            <a href="action.php?Action=AddCartItem&Index=<?php echo($key); ?>&Quantity=1"><img src="images/plus.gif" width="11" height="11" border="0" alt="<?php echo ADD_ONE; ?>" title="<?php echo ADD_ONE; ?>"></a>
-                            <a href="action.php?Action=RemoveItem&Index=<?php echo($key); ?>&Quantity=1"><img src="images/minus.gif" width="11" height="11" border="0" alt="<?php echo SUBTRACT_ONE; ?>" title="<?php echo SUBTRACT_ONE; ?>"></a>
-                            <a href="javascript:popupWindow('product_popup.php?Index=<?php echo($key); ?>',400,100)"><img src="images/num.gif" width="11" height="11" border="0" alt="<?php echo ADD_MULT; ?>" title="<?php echo ADD_MULT; ?>"></a>
-                            <a href="action.php?Action=DeleteItem&Index=<?php echo($key); ?>"><img src="images/delete.gif" width="11" height="11" border="0" alt="<?php echo REMOVE; ?>" title="<?php echo REMOVE; ?>"></a>
+                            <a href="action.php?Action=AddCartItem&Index=<?php echo($key); ?>&Quantity=1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                            <a href="action.php?Action=RemoveItem&Index=<?php echo($key); ?>&Quantity=1"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>
+                            <a href="javascript:popupWindow('product_popup.php?Index=<?php echo($key); ?>',400,100)"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a>
+                            <a href="action.php?Action=DeleteItem&Index=<?php echo($key); ?>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                 <?php } ?>
                     </td>
                     <!--
@@ -1531,17 +1530,21 @@ class Order {
             <tr height="80px">
                 <td width="100%" colspan="6" class="tdHeader" align="center"><br>
 
-                    <a class="button" title="<?php echo REMOVE_ORDER_BUTTON_TITLE; ?>" style="color: #993333" href="#" onclick="this.blur(); window.location.href='action.php?Action=RemoveOrder'"><span><?php echo REMOVE_ORDER; ?></span><input type="hidden" value="<?php echo REMOVE_ORDER; ?>"></a>
+                    <a href="#" class="btn btn-default btn-sm" role="button" onclick="this.blur(); window.location.href='action.php?Action=RemoveOrder'"><?php echo REMOVE_ORDER; ?><input type="hidden" value="<?php echo REMOVE_ORDER; ?>"></a>
+					<!--<a class="button" title="<?php //echo REMOVE_ORDER_BUTTON_TITLE; ?>" style="color: #993333" href="#" onclick="this.blur(); window.location.href='action.php?Action=RemoveOrder'"><span><?php //echo REMOVE_ORDER; ?></span><input type="hidden" value="<?php //echo REMOVE_ORDER; ?>"></a>-->
 
                     <?php if (!$this->CustomerID) { ?>
-                        <a class="button-disabled" title="<?php echo DROP_ASSIGNED_CUST_BUTTON_TITLE; ?>" href="#" onclick="this.blur();"><span><?php echo DROP_ASSIGNED_CUST; ?></span><input type="hidden" value="<?php echo DROP_ASSIGNED_CUST; ?>"></a>
+                        <a href="#" class="btn btn-default btn-sm disabled" role="button" onclick="this.blur();"><?php echo DROP_ASSIGNED_CUST; ?></span><input type="hidden" value="<?php echo DROP_ASSIGNED_CUST; ?>"></a>
+						<!--<a class="button-disabled" title="<?php //echo DROP_ASSIGNED_CUST_BUTTON_TITLE; ?>" href="#" onclick="this.blur();"><span><?php //echo DROP_ASSIGNED_CUST; ?></span><input type="hidden" value="<?php //echo DROP_ASSIGNED_CUST; ?>"></a>-->
             <?php } else { ?>
-                        <a class="button" title="<?php echo DROP_ASSIGNED_CUST_BUTTON_TITLE; ?>" style="color: #993333" href="#" onclick="this.blur(); window.location.href='action.php?Action=RemoveCustomer'"><span><?php echo DROP_ASSIGNED_CUST; ?></span><input type="hidden" value="<?php echo DROP_ASSIGNED_CUST; ?>"></a>
+                        <a href="#" class="btn btn-default btn-sm" role="button" onclick="this.blur();"><?php echo DROP_ASSIGNED_CUST; ?><input type="hidden" value="<?php echo DROP_ASSIGNED_CUST; ?>"></a>
+						<!--<a class="button" title="<?php //echo DROP_ASSIGNED_CUST_BUTTON_TITLE; ?>" style="color: #993333" href="#" onclick="this.blur(); window.location.href='action.php?Action=RemoveCustomer'"><span><?php //echo DROP_ASSIGNED_CUST; ?></span><input type="hidden" value="<?php //echo DROP_ASSIGNED_CUST; ?>"></a>-->
                             <?php } ?>
 
-                    <a class="button" title="<?php echo ADD_COMMENTS_BUTTON_TITLE; ?>" style="color: #993333" href="#" onclick="this.blur(); popupStaticWindow('comments','comments_add.php',450,250)"><span><?php echo ADD_COMMENTS; ?></span><input type="hidden" value="<?php echo ADD_COMMENTS; ?>"></a>
+                    <a href="#" class="btn btn-default btn-sm" role="button" onclick="this.blur(); popupStaticWindow('comments','comments_add.php',450,250)"><?php echo ADD_COMMENTS; ?><input type="hidden" value="<?php echo ADD_COMMENTS; ?>"></a>
+					<!--<a class="button" title="<?php //echo ADD_COMMENTS_BUTTON_TITLE; ?>" style="color: #993333" href="#" onclick="this.blur(); popupStaticWindow('comments','comments_add.php',450,250)"><span><?php //echo ADD_COMMENTS; ?></span><input type="hidden" value="<?php //echo ADD_COMMENTS; ?>"></a>-->
 
-                    <a class="button" title="<?php echo APPLY_TAX_BUTTON_TITLE; ?>" style="color: #993333" href="#" onclick="this.blur(); window.location.href='action.php?Action=TaxExempt'"><span><?php
+                    <a href="#" class="btn btn-default btn-sm" role="button" onclick="this.blur(); window.location.href='action.php?Action=TaxExempt'"><?php
                 if ($this->TaxExempt) {
                     echo APPLY_TAX;
                 } else {
@@ -1555,24 +1558,26 @@ class Order {
                 }
                             ?>"></a>
 
-                    <a class="button" title="<?php echo ARCHIVE_ORDER_BUTTON_TITLE; ?>" style="color: #993333" href="#" onclick="this.blur(); archive_confirm(<?php echo $non_inventory_count; ?>);"><span><?php echo ARCHIVE_ORDER; ?></span><input type="hidden" value="<?php echo ARCHIVE_ORDER; ?>"></a>
+                    <a class="btn btn-default btn-sm" href="#" onclick="this.blur(); archive_confirm(<?php echo $non_inventory_count; ?>);"><?php echo ARCHIVE_ORDER; ?><input type="hidden" value="<?php echo ARCHIVE_ORDER; ?>"></a>
                     <br /><br />
 
                     <?php if ($this->ReturnOrder) { ?>
-                        <a class="button" title="<?php echo RESTOCK_FEE_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='restock_fee.php?method=<?php echo ($this->RestockMethod); ?>&value=<?php echo ($this->RestockValue); ?>'" style="font-weight: bold; color: #993333"><span><?php echo RESTOCK_FEE; ?></span></a>
+                        <a class="btn btn-default" href="#" onclick="this.blur(); window.location.href='restock_fee.php?method=<?php echo ($this->RestockMethod); ?>&value=<?php echo ($this->RestockValue); ?>'"><?php echo RESTOCK_FEE; ?></a>
             <?php } ?>
 
-                    <a class="button" title="<?php echo SHIPPING_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='shipping.php?method=<?php echo ($this->ShippingMethod); ?>&value=<?php echo ($this->ShippingValue); ?>'" style="font-weight: bold; color: #993333"><span><?php echo SHIPPING_FEE; ?></span></a>
+                    <a class="btn btn-primary" href="#" onclick="this.blur(); window.location.href='shipping.php?method=<?php echo ($this->ShippingMethod); ?>&value=<?php echo ($this->ShippingValue); ?>'"><?php echo SHIPPING_FEE; ?></a>
             <?php if ($this->GetNumItems() == 0) { ?>
-                        <a class="button-disabled" title="<?php echo COMPLETE_ORDER_BUTTON_TITLE; ?>" href="#" onclick="this.blur();"><span><?php echo COMPLETE_ORDER; ?></span><input type="hidden" value="<?php echo COMPLETE_ORDER; ?>"></a>
+                        <a class="btn btn-success disabled" href="#" onclick="this.blur();"><?php echo COMPLETE_ORDER; ?><input type="hidden" value="<?php echo COMPLETE_ORDER; ?>"></a>
             <?php } else { ?>
-                        <a class="button" title="<?php echo COMPLETE_ORDER_BUTTON_TITLE; ?>" style="font-weight: bold; color: #229944" href="#" onclick="this.blur(); window.location.href='checkout.php'"><span><?php echo COMPLETE_ORDER; ?></span><input type="hidden" value="<?php echo COMPLETE_ORDER; ?>"></a>
+                        <a class="btn btn-success" href="#" onclick="this.blur(); window.location.href='checkout.php'"><?php echo COMPLETE_ORDER; ?><input type="hidden" value="<?php echo COMPLETE_ORDER; ?>"></a>
             <?php } ?>
 
                 </td>
             </tr>
         <?php } ?>
         </table>
+		</div> <!--end of panel-->
+		//TABLE END
         <br />
         <?php if (strlen($this->Comments) > 0) { // if there are comments ?>
             <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">

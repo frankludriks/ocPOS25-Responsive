@@ -1,0 +1,10 @@
+.center-block {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inputRequirement {
+  color: #B33A3A;
+  padding-right: 20px;
+}

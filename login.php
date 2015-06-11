@@ -19,13 +19,32 @@ if($session->logged_in) {
 } else {
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <link rel="icon" href="favicon.ico">
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-   <title><?php echo($POSName) . ': ' . TITLE; ?></title>
-   <link rel="Stylesheet" href="css/style.css">
-</head>
+    <title>Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="user.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+  </head>
 <body onload="document.Login.user.focus()";>
 
 <?php /* include("includes/header.php");  */?>
@@ -38,39 +57,49 @@ if($session->logged_in) {
  * If errors occurred, they will be displayed.
  */
 ?>
-<form action="process.php" method="POST" name=Login>
-<center><br><br>
-<table align="middle" border="1" cellspacing="0" cellpadding="3" width="500px">
-    <tr><td class="tdBlue" align="middle">
-    <h1><?php echo LOGIN; ?></h1>
-<?php if($form->num_errors > 0) echo('Login Error.  Please try again.'); ?>
-    </td></tr>
-    <tr height="150px"><td width="50%" align="middle">
-        Username:<input type="text" name="user" maxlength="30" value="<?php echo $form->value("user"); ?>" onkeydown="if (event.keyCode == 13) document.Login.submit();">
-        <br><br>
-        Password:<input type="password" name="pass" maxlength="30" value="<?php echo $form->value("pass"); ?>" onkeydown="if (event.keyCode == 13) document.Login.submit();">
-        <br><br>
-        <?php  echo $form->error("user"); ?>
-        <br>
-        <?php echo $form->error("pass"); ?>
-        <br><br>
-<?php 
-/* <tr><td colspan="2" align="left"><input type="checkbox" name="remember" <?php  if($form->value("remember") != ""){ echo "checked"; } ?>>
-<font size="2">Remember me next time &nbsp;&nbsp;&nbsp;&nbsp;
-*/
-?>
-        <input type="hidden" name="sublogin" value="1">
-        <a class="button" title="<?php echo LOGIN; ?>" href="#"  onclick="this.blur(); document.Login.submit();"><span><?php echo LOGIN_BUTTON_TEXT; ?></span></a>
-        <font size="2">&nbsp;&nbsp;<a href="forgotpass.php"><?php echo FORGOT_PASSWORD; ?></a></font>
-    </td></tr>
-</table>
-</form>
+<div class="container">
+ <div class="col-md-8 center-block">
+ <?php if($form->num_errors > 0) echo '<div class="alert alert-danger" role="alert">Login Error. ' . $form->error("pass") . $form->error("user") . '.  Please try again.</div>'; ?>
+   <div class="panel panel-default">
+	  <div class="panel-heading">
+		<h3 class="panel-title">Login</h3>
+	  </div>
+	  <div class="panel-body">
+		<form action="process.php" method="POST" name="Login" class="form-horizontal">
+		  <div class="form-group">
+			<label for="user" class="col-sm-2 control-label"><?php echo USERNAME; ?></label>
+			<div class="col-sm-10">
+			  <input type="email" name="user" value="<?php echo $form->value("user"); ?>" class="form-control" id="user" placeholder="Username">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="pass" class="col-sm-2 control-label">Password</label>
+			<div class="col-sm-10">
+			  <input type="password" name="pass" class="form-control" value="<?php echo $form->value("pass"); ?>" id="pass" placeholder="Password">
+			</div>
+			<input type="hidden" name="sublogin" value="1">
+		  </div>
+		  <div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+			<a href="#" class="btn btn-success" role="button" onclick="this.blur(); document.Login.submit();"><?php echo LOGIN_BUTTON_TEXT; ?></a>
+			<a href="forgotpass.php" class="btn btn-default" role="button"><?php echo FORGOT_PASSWORD; ?></a>  
+			</div>
+		  </div>
+		</form>
+	  </div>
+  </div>
+ </div>
 
 <?php 
 }
 ?>
+    </div> <!-- /container -->
 
 
-<?php include("includes/footer.php"); ?>
-</body>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	<!-- include jquery and bootstrap -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  </body>
 </html>

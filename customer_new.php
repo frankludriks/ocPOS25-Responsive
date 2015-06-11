@@ -154,12 +154,31 @@ if(is_array($_POST)){
 
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-       <title><?php echo($POSName) . ': ' . TITLE; ?></title>
-       <link rel="Stylesheet" href="css/style.css">
-       <script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title><?php echo($POSName) . ': ' . TITLE; ?></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="user.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
    <script language="JavaScript" type="text/javascript">
     <!--
     // address form validation
@@ -218,260 +237,266 @@ if(is_array($_POST)){
    
 </head>
 <body onload="document.NewCustomer.customers_firstname.focus();">
-
-<?php include("includes/header.php"); ?>
-
-<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center">
- <tr>
-  <td width="100%">
+  <div class="container">
   
- <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
- <form name="NewCustomer" method="post">
- <input type="hidden" name="posted" value="true">
- <tr>
- <td width="100%" class="tdBlue" colspan="2" align="center">
-  <b><?php echo CREATE_NEW_CUST; ?></b>
- </td>
- </tr>
- <?php if($_POST['posted']){ ?>
- <tr>
- <td width="100%" class="tdBlue" colspan="2">
-  <?php
-  TestFormInput($_POST['posted'],$ReqVars);
-  if($_POST['customers_password']!=$_POST['customers_password_2']){
-  		echo('<li>' .  PASSWORD_NO_MATCH . '</li>');
-  }
-  if ($R_email['found'] == '1') {
-        echo '<li>' . EMAIL_IN_USE .'</li>';
-  }
-  ?>
- </td>
- </tr>
-<?php } ?>
- <tr>
- <td width="20%" class="tdBlue"><b><?php echo FIRST_NAME; ?></b></td>
- <td width="80%"><input type="text" name="customers_firstname" size="40" value="<?php echo($_POST['customers_firstname']); ?>"> *</td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo LAST_NAME; ?></b></td>
-     <td><input type="text" name="customers_lastname" size="40" value="<?php echo($_POST['customers_lastname']); ?>"> *</td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo EMAIL; ?></b></td>
-     <td><input type="text" name="customers_email_address" size="40" value="<?php echo($_POST['customers_email_address']); ?>"></td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo PHONE; ?></b></td>
-     <td><input type="text" name="customers_telephone" size="40" value="<?php echo($_POST['customers_telephone']); ?>"></td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo FAX; ?></b></td>
-     <td><input type="text" name="customers_fax" size="40" value="<?php echo($_POST['customers_fax']); ?>"></td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo PASSWORD; ?></b></td>
-     <td><input type="password" name="customers_password" size="40" value="<?php echo($_POST['customers_password']); ?>"></td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo PASSWORD_AGAIN; ?></b></td>
-     <td><input type="password" name="customers_password_2" size="40" value="<?php echo($_POST['customers_password_2']); ?>"></td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo NEWSLETTER; ?></b></td>
-     <td><input type="checkbox" name="customers_newsletter" value="1"<?php if($_POST['customers_newsletter']){ echo(" checked"); } ?>><?php echo NEWSLETTER_SUBSCRIBE; ?></td>
- </tr>
- 
- 
- <?php /* primary address section */ ?>
- <tr>
- <td width="100%" class="tdBlue" colspan="2" align="center">
-  <b><?php echo PRIMARY_ADDRESS; ?></b>
- </td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo COMPANY; ?></b></td>
-     <td><input type="text" name="entry_company" size="40" value="<?php echo($_POST['entry_company']); ?>"></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo STREET_ADDRESS; ?></b></td>
-     <td><input type="text" name="entry_street_address" size="40" value="<?php echo($_POST['entry_street_address']); ?>"></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo SUBURB; ?></b></td>
-     <td><input type="text" name="entry_suburb" size="40" maxlength="32" value="<?php echo($_POST['entry_suburb']); ?>"></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo CITY; ?></b></td>
-     <td><input type="text" name="entry_city" size="40" value="<?php echo($_POST['entry_city']); ?>"></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo STATE; ?></b></td>
-     <td>
- <select name="entry_zone_id">
- <?php
- $default_zone_query = mysql_query("select configuration_value as zone_id from " . CONFIGURATION . " where configuration_key = 'STORE_ZONE'");
- $default_zone = mysql_fetch_array($default_zone_query);
- 
- 
- $Q_Zone = mysql_query("SELECT * FROM " . ZONES . " ORDER BY zone_name");
- while($R_Zone = mysql_fetch_assoc($Q_Zone)){
- 	if($_POST['entry_zone_id'] == $R_Zone['zone_id']){
-		echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
-	}elseif(!$_POST['entry_zone_id'] && $R_Zone['zone_id'] == $default_zone['zone_id']){ 
-		echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
-	}else{
-		echo("<option value=\"" . $R_Zone['zone_id'] . "\">" . $R_Zone['zone_name'] . "</option>\n");
-	}
- }
- ?>
- </select>
- </td>
- </tr>
- 
- <tr>
- <td class="tdBlue"><b><?php echo POST_CODE; ?></b></td>
- <td><input type="text" name="entry_postcode" size="40" value="<?php echo($_POST['entry_postcode']); ?>"></td>
- </tr>
- 
- <tr>
- <td class="tdBlue"><b><?php echo COUNTRY; ?></b></td>
- <td>
- <select name="entry_country_id">
- <?php
- $Q_Country = mysql_query("SELECT * FROM " . COUNTRIES . " ORDER BY countries_name");
- while($R_Country = mysql_fetch_assoc($Q_Country)){
- 	if($_POST['entry_country_id'] == $R_Country['countries_id']){
-		echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
-	}elseif(!$_POST['entry_country_id'] && $R_Country['countries_id'] == 223){
-		echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
-	}else{
-		echo("<option value=\"" . $R_Country['countries_id'] . "\">" . $R_Country['countries_name'] . "</option>\n");
-	}
- }
- ?>
- </select>
- </td>
- </tr>
-<?php /* end primary address section */ ?>
+		<?php include("includes/header.php"); ?>
+			<form class="form-horizontal" name="NewCustomer" method="post">
+			 <input type="hidden" name="posted" value="true">
+			 
+			 <?php if($_POST['posted']){ ?>
+					  <?php
+					  TestFormInput($_POST['posted'],$ReqVars);
+					  if($_POST['customers_password']!=$_POST['customers_password_2']){
+							echo'<div class="alert alert-danger" role="alert">' . PASSWORD_NO_MATCH . '</div>';
+					  }
+					  if ($R_email['found'] == '1') {
+							echo '<div class="alert alert-danger" role="alert">' . EMAIL_IN_USE . '</div>';
+					  }
+					  ?>
+			<?php } ?>
+			
+			 <div class="panel panel-primary">
+			   <div class="panel-heading">
+			     <h3 class="panel-title text-center"><?php echo CREATE_NEW_CUST; ?></h3>
+			   </div>
+			    <div class="panel-body">
+					<div class="form-group">
+					  <label for="customers_firstname" class="col-sm-2 control-label"><?php echo FIRST_NAME; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="customers_firstname" value="<?php echo($_POST['customers_firstname']); ?>" class="form-control" id="customers_firstname" placeholder="<?php echo FIRST_NAME; ?>">
+						  <span class="glyphicon glyphicon-asterisk form-control-feedback inputRequirement"></span>
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="customers_lastname" class="col-sm-2 control-label"><?php echo LAST_NAME; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="customers_lastname" value="<?php echo($_POST['customers_lastname']); ?>" class="form-control" id="customers_lastname" placeholder="<?php echo LAST_NAME; ?>">
+						  <span class="glyphicon glyphicon-asterisk form-control-feedback inputRequirement"></span>
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="customers_email_address" class="col-sm-2 control-label"><?php echo EMAIL; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="customers_email_address" value="<?php echo($_POST['customers_email_address']); ?>" class="form-control" id="customers_email_address" placeholder="<?php echo EMAIL; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="customers_telephone" class="col-sm-2 control-label"><?php echo PHONE; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="customers_telephone" value="<?php echo($_POST['customers_telephone']); ?>" class="form-control" id="customers_telephone" placeholder="<?php echo PHONE; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="customers_fax" class="col-sm-2 control-label"><?php echo FAX; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="customers_fax" value="<?php echo($_POST['customers_fax']); ?>" class="form-control" id="customers_fax" placeholder="<?php echo FAX; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="customers_password" class="col-sm-2 control-label"><?php echo PASSWORD; ?></label>
+						<div class="col-sm-10">
+						  <input type="password" name="customers_password" value="<?php echo($_POST['customers_password']); ?>" class="form-control" id="customers_password" placeholder="<?php echo PASSWORD; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="customers_password_2" class="col-sm-2 control-label"><?php echo PASSWORD_AGAIN; ?></label>
+						<div class="col-sm-10">
+						  <input type="password" name="customers_password_2" value="<?php echo($_POST['customers_password_2']); ?>" class="form-control" id="customers_password_2" placeholder="<?php echo PASSWORD_AGAIN; ?>">
+						</div>
+					</div>
+					<div class="checkbox">
+					  <label>
+						<input type="checkbox" name="customers_newsletter" value="1"<?php if($_POST['customers_newsletter']){ echo(" checked"); } ?>> <?php echo NEWSLETTER; ?>
+					  </label>
+					</div>
+					<?php /* primary address section */ ?>
+					<div><h3><?php echo PRIMARY_ADDRESS; ?></h3></div>
+					<div class="form-group">
+					  <label for="entry_company" class="col-sm-2 control-label"><?php echo COMPANY; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="entry_company" value="<?php echo($_POST['entry_company']); ?>" class="form-control" id="entry_company" placeholder="<?php echo COMPANY; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="entry_street_address" class="col-sm-2 control-label"><?php echo STREET_ADDRESS; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="entry_street_address" value="<?php echo($_POST['entry_street_address']); ?>" class="form-control" id="entry_street_address" placeholder="<?php echo STREET_ADDRESS; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="entry_suburb" class="col-sm-2 control-label"><?php echo SUBURB; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="entry_suburb" value="<?php echo($_POST['entry_suburb']); ?>" class="form-control" id="entry_suburb" placeholder="<?php echo SUBURB; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="entry_city" class="col-sm-2 control-label"><?php echo CITY; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="entry_city" value="<?php echo($_POST['entry_city']); ?>" class="form-control" id="entry_city" placeholder="<?php echo CITY; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="entry_zone_id" class="col-sm-2 control-label"><?php echo STATE; ?></label>
+						<div class="col-sm-10">
+						  <select class="form-control" name="entry_zone_id">
+						  <?php
+							 $default_zone_query = mysql_query("select configuration_value as zone_id from " . CONFIGURATION . " where configuration_key = 'STORE_ZONE'");
+							 $default_zone = mysql_fetch_array($default_zone_query);
+							 
+							 $Q_Zone = mysql_query("SELECT * FROM " . ZONES . " ORDER BY zone_name");
+							 while($R_Zone = mysql_fetch_assoc($Q_Zone)){
+								if($_POST['entry_zone_id'] == $R_Zone['zone_id']){
+									echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
+								}elseif(!$_POST['entry_zone_id'] && $R_Zone['zone_id'] == $default_zone['zone_id']){ 
+									echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
+								}else{
+									echo("<option value=\"" . $R_Zone['zone_id'] . "\">" . $R_Zone['zone_name'] . "</option>\n");
+								}
+							 }
+							?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="entry_postcode" class="col-sm-2 control-label"><?php echo POST_CODE; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="entry_postcode" value="<?php echo($_POST['entry_postcode']); ?>" class="form-control" id="entry_postcode" placeholder="<?php echo POST_CODE; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="entry_country_id" class="col-sm-2 control-label"><?php echo COUNTRY; ?></label>
+						<div class="col-sm-10">
+						 <select class="form-control" name="entry_country_id">
+						 <?php
+						 $Q_Country = mysql_query("SELECT * FROM " . COUNTRIES . " ORDER BY countries_name");
+						 while($R_Country = mysql_fetch_assoc($Q_Country)){
+							if($_POST['entry_country_id'] == $R_Country['countries_id']){
+								echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
+							}elseif(!$_POST['entry_country_id'] && $R_Country['countries_id'] == 223){
+								echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
+							}else{
+								echo("<option value=\"" . $R_Country['countries_id'] . "\">" . $R_Country['countries_name'] . "</option>\n");
+							}
+						 }
+						 ?>
+						 </select>
+						</div>
+					</div>
+					<?php /* end primary address section */ ?>
+					<?php /* secondary address section */ ?>
+					<div><h3><?php echo SECONDARY_ADDRESS; ?> <input type="checkbox" name="use_secondary_address" value="1"<?php if($_POST['use_secondary_address']){ echo(" checked"); } ?>></h3> </div>
+					<div class="form-group">
+					  <label for="secondary_entry_company" class="col-sm-2 control-label"><?php echo COMPANY; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="secondary_entry_company" value="<?php echo($_POST['secondary_entry_company']); ?>" class="form-control" id="secondary_entry_company" placeholder="<?php echo COMPANY; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="secondary_customers_firstname" class="col-sm-2 control-label"><?php echo FIRST_NAME; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="secondary_customers_firstname" value="<?php echo($_POST['secondary_customers_firstname']); ?>" class="form-control" id="secondary_customers_firstname" placeholder="<?php echo FIRST_NAME; ?>">
+						  <span class="glyphicon glyphicon-asterisk form-control-feedback inputRequirement"></span>
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="secondary_customers_lastname" class="col-sm-2 control-label"><?php echo LAST_NAME; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="secondary_customers_lastname" value="<?php echo($_POST['secondary_customers_lastname']); ?>" class="form-control" id="secondary_customers_lastname" placeholder="<?php echo LAST_NAME; ?>">
+						  <span class="glyphicon glyphicon-asterisk form-control-feedback inputRequirement"></span>
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="secondary_entry_street_address" class="col-sm-2 control-label"><?php echo STREET_ADDRESS; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="secondary_entry_street_address" value="<?php echo($_POST['secondary_entry_street_address']); ?>" class="form-control" id="secondary_entry_street_address" placeholder="<?php echo STREET_ADDRESS; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="secondary_entry_suburb" class="col-sm-2 control-label"><?php echo SUBURB; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="secondary_entry_suburb" value="<?php echo($_POST['secondary_entry_suburb']); ?>" class="form-control" id="secondary_entry_suburb" placeholder="<?php echo SUBURB; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="secondary_entry_city" class="col-sm-2 control-label"><?php echo CITY; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="secondary_entry_city" value="<?php echo($_POST['secondary_entry_city']); ?>" class="form-control" id="secondary_entry_city" placeholder="<?php echo CITY; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="secondary_entry_zone_id" class="col-sm-2 control-label"><?php echo STATE; ?></label>
+						<div class="col-sm-10">
+						  <select class="form-control" name="secondary_entry_zone_id">
+						  <?php
+							 $default_zone_query = mysql_query("select configuration_value as zone_id from " . CONFIGURATION . " where configuration_key = 'STORE_ZONE'");
+							 $default_zone = mysql_fetch_array($default_zone_query);
+							 
+							 $Q_Zone = mysql_query("SELECT * FROM " . ZONES . " ORDER BY zone_name");
+							 while($R_Zone = mysql_fetch_assoc($Q_Zone)){
+								if($_POST['secondary_entry_zone_id'] == $R_Zone['zone_id']){
+									echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
+								}elseif(!$_POST['secondary_entry_zone_id'] && $R_Zone['zone_id'] == $default_zone['zone_id']){ 
+									echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
+								}else{
+									echo("<option value=\"" . $R_Zone['zone_id'] . "\">" . $R_Zone['zone_name'] . "</option>\n");
+								}
+							 }
+							?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="secondary_entry_postcode" class="col-sm-2 control-label"><?php echo POST_CODE; ?></label>
+						<div class="col-sm-10">
+						  <input type="text" name="secondary_entry_postcode" value="<?php echo($_POST['secondary_entry_postcode']); ?>" class="form-control" id="secondary_entry_postcode" placeholder="<?php echo POST_CODE; ?>">
+						</div>
+					</div>
+					<div class="form-group">
+					  <label for="secondary_entry_country_id" class="col-sm-2 control-label"><?php echo COUNTRY; ?></label>
+						<div class="col-sm-10">
+						 <select class="form-control" name="secondary_entry_country_id">
+						 <?php
+						 $Q_Country = mysql_query("SELECT * FROM " . COUNTRIES . " ORDER BY countries_name");
+						 while($R_Country = mysql_fetch_assoc($Q_Country)){
+							if($_POST['secondary_entry_country_id'] == $R_Country['countries_id']){
+								echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
+							}elseif(!$_POST['secondary_entry_country_id'] && $R_Country['countries_id'] == 223){
+								echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
+							}else{
+								echo("<option value=\"" . $R_Country['countries_id'] . "\">" . $R_Country['countries_name'] . "</option>\n");
+							}
+						 }
+						 ?>
+						 </select>
+						</div>
+					</div>
 
- <?php /* secondary address section */ ?>
- <tr>
- <td width="100%" class="tdBlue" colspan="2" align="center">
-  <b><?php echo SECONDARY_ADDRESS; ?></b>
-  <input type="checkbox" name="use_secondary_address" value="1"<?php if($_POST['use_secondary_address']){ echo(" checked"); } ?>></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo COMPANY; ?></b></td>
-     <td><input type="text" name="secondary_entry_company" size="40" value="<?php echo($_POST['secondary_entry_company']); ?>"></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo FIRST_NAME; ?></b></td>
-    <td><input type="text" name="secondary_customers_firstname" size="40" value="<?php echo($_POST['secondary_customers_firstname']); ?>"> *</td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo LAST_NAME; ?></b></td>
-     <td><input type="text" name="secondary_customers_lastname" size="40" value="<?php echo($_POST['secondary_customers_lastname']); ?>"> *</td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo STREET_ADDRESS; ?></b></td>
-     <td><input type="text" name="secondary_entry_street_address" size="40" value="<?php echo($_POST['secondary_entry_street_address']); ?>"></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo SUBURB; ?></b></td>
-     <td><input type="text" name="secondary_entry_suburb" size="40" maxlength="32" value="<?php echo($_POST['secondary_entry_suburb']); ?>"></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo CITY; ?></b></td>
-     <td><input type="text" name="secondary_entry_city" size="40" value="<?php echo($_POST['secondary_entry_city']); ?>"></td>
- </tr>
- 
- <tr>
- <td class="tdBlue"><b><?php echo STATE; ?></b></td>
- <td>
- <select name="secondary_entry_zone_id">
- <?php
- $default_zone_query = mysql_query("select configuration_value as zone_id from " . CONFIGURATION . " where configuration_key = 'STORE_ZONE'");
- $default_zone = mysql_fetch_array($default_zone_query);
- 
- 
- $Q_Zone = mysql_query("SELECT * FROM " . ZONES . " ORDER BY zone_name");
- while($R_Zone = mysql_fetch_assoc($Q_Zone)){
- 	if($_POST['entry_zone_id'] == $R_Zone['zone_id']){
-		echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
-	}elseif(!$_POST['entry_zone_id'] && $R_Zone['zone_id'] == $default_zone['zone_id']){ // Massachusets
-		echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
-	}else{
-		echo("<option value=\"" . $R_Zone['zone_id'] . "\">" . $R_Zone['zone_name'] . "</option>\n");
-	}
- }
- ?>
- </select>
- </td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo POST_CODE; ?></b></td>
-     <td><input type="text" name="secondary_entry_postcode" size="40" value="<?php echo($_POST['secondary_entry_postcode']); ?>"></td>
- </tr>
- 
- <tr>
-     <td class="tdBlue"><b><?php echo COUNTRY; ?></b></td>
-     <td>
- <select name="secondary_entry_country_id">
- <?php
- $Q_Country = mysql_query("SELECT * FROM " . COUNTRIES . " ORDER BY countries_name");
- while($R_Country = mysql_fetch_assoc($Q_Country)){
- 	if($_POST['entry_country_id'] == $R_Country['countries_id']){
-		echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
-	}elseif(!$_POST['entry_country_id'] && $R_Country['countries_id'] == 223){
-		echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
-	}else{
-		echo("<option value=\"" . $R_Country['countries_id'] . "\">" . $R_Country['countries_name'] . "</option>\n");
-	}
- }
- ?>
- </select>
- </td>
- </tr>
-<?php /* end secondary address section */ ?>
- 
- 
- <tr height="75px">
- <td width="100%" class="tdBlue" colspan="2" align="center"><br>
-   <input type="hidden" name="Create" value="tempvalue">
-   <?php if($_SESSION['CurrentOrderIndex'] == -1) { ?>
-      <a class="button-disabled" title="<?php echo CREATE_ASSIGN_CURRENT_BUTTON_TITLE; ?>" href="#" onclick="this.blur();"><span><?php echo CREATE_AND_ASSIGN_CURRENT; ?></span></a> 
-   <?php } else { ?> 
-      <a class="button" title="<?php echo CREATE_ASSIGN_CURRENT_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); document.NewCustomer.Create.value='<?php echo CREATE_AND_ASSIGN_CURRENT; ?>';  document.NewCustomer.submit();"><span><?php echo CREATE_AND_ASSIGN_CURRENT; ?></span></a>
-   <?php } ?>
-   
-   <a class="button" title="<?php echo CREATE_ASSIGN_NEW_BUTTON_TITLE; ?>" href="#"  onclick="this.blur(); document.NewCustomer.Create.value='<?php echo CREATE_AND_ASSIGN_NEW; ?>';  document.NewCustomer.submit();"><span><?php echo CREATE_AND_ASSIGN_NEW; ?></span></a>
-   
-   <a class="button" title="<?php echo CREATE_NO_ASSIGN_BUTTON_TITLE; ?>" href="#"  onclick="if (add_address_confirm()) {this.blur(); document.NewCustomer.Create.value='<?php echo CREATE_NO_ASSIGN; ?>';  document.NewCustomer.submit();}"><span><?php echo CREATE_NO_ASSIGN; ?></span></a>
-   <br><br>
-   <a class="button" title="<?php echo BACK_BUTTON_TITLE; ?>" href="#"  onclick="this.blur(); window.history.go(-1);"><span><?php echo BACK; ?></span></a>
-    
- </td>
- </tr>
- </form>
- </table>
- 
- 
-  </td>
- </tr>
-</table>
+			<?php /* end secondary address section */ ?>
+					<div>
+					  <input type="hidden" name="Create" value="tempvalue">
+					    <?php if($_SESSION['CurrentOrderIndex'] == -1) { ?>
+						  <a href="#" class="btn btn-default btn-sm" disabled="disabled" role="button" onclick="this.blur();"><?php echo CREATE_AND_ASSIGN_CURRENT; ?></a>
+						<?php } else { ?>
+						  <a href="#" class="btn btn-default btn-sm" role="button" onclick="this.blur(); document.NewCustomer.Create.value='<?php echo CREATE_AND_ASSIGN_CURRENT; ?>';  document.NewCustomer.submit();"><?php echo CREATE_AND_ASSIGN_CURRENT; ?></a>
+						<?php 
+						  } 
+						?>	
+						  <a href="#" class="btn btn-default btn-sm" role="button" onclick="this.blur(); document.NewCustomer.Create.value='<?php echo CREATE_AND_ASSIGN_NEW; ?>';  document.NewCustomer.submit();"><?php echo CREATE_AND_ASSIGN_NEW; ?></a>
+						  <a href="#" class="btn btn-default btn-sm" role="button" onclick="if (add_address_confirm()) {this.blur(); document.NewCustomer.Create.value='<?php echo CREATE_NO_ASSIGN; ?>';  document.NewCustomer.submit();}"><?php echo CREATE_NO_ASSIGN; ?></a>
+						  <a href="#" class="btn btn-default btn-sm" role="button" onclick="this.blur(); window.history.back();"><?php echo BACK; ?></a>
+					</div>
+			    </div> <!-- end of panel body-->
+			  </div> <!-- end of panel -->
+			</form>
 
-
-<?php include("includes/footer.php"); ?>
-</body>
+	  <footer class="footer">
+        <?php include("includes/footer.php"); ?>
+      </footer>
+    </div> <!-- /container -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	<!-- include jquery and bootstrap -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  </body>
 </html>

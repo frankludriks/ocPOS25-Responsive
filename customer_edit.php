@@ -92,29 +92,45 @@ if ($updated == 1 && !$email_warning) {
 }
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-	<?php if ($updated == 1) { ?>
-		<meta http-equiv="refresh" content="1;url=customer.php?CustomerID=<?php echo ($_GET['CustomerID']); ?>">
-		<?php } ?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <link rel="icon" href="favicon.ico">
 
-       <title><?php echo($POSName); ?></title>
-       <link rel="Stylesheet" href="css/style.css">
-       <script language="JavaScript" src="javascript.js" type="text/javascript"></script>
-</head>
+    <title><?php echo($POSName) . ': ' . TITLE; ?></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="user.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+  </head>
 <body>
+<div class="container">
 <?php include("includes/header.php"); ?>
 
-<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center">
+<table class="table">
  <tr>
   <td width="100%">
 
  <form name="EditCustomer" action="customer_edit.php?CustomerID=<?php echo $customer_id; ?>&submit=1" method="post">
 
- <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
+ <table class="table">
  <tr>
- <td width="100%" class="tdBlue" colspan="2" align="center">
+ <td width="100%" colspan="2" align="center">
   <b><?php echo(CUSTOMER_INFORMATION . ' ' . $R_Customer['customers_firstname'] . ' ' . $R_Customer['customers_lastname']); ?></b>
  </td>
  </tr>
@@ -135,7 +151,7 @@ if ( ($R_Customer['day'] < 1) && ($R_Customer['day'] < 1) ) {
 ?>
 
  <tr>
- <td width="20%" class="tdBlue"><b><?php echo FULL_NAME; ?></b></td>
+ <td width="20%"><b><?php echo FULL_NAME; ?></b></td>
  <td width="80%">
         <input type="text" size="20" maxlength="40" name="fname" value="<?php echo($R_Customer['customers_firstname']); ?>">
         <input type="text" size="20" maxlength="40" name="lname" value="<?php echo($R_Customer['customers_lastname']); ?>">
@@ -143,24 +159,24 @@ if ( ($R_Customer['day'] < 1) && ($R_Customer['day'] < 1) ) {
  </tr>
 
  <tr>
-     <td width="20%" class="tdBlue"><b><?php echo PHONE; ?></b></td>
+     <td width="20%"><b><?php echo PHONE; ?></b></td>
      <td width="80%">
         <input type="text" size="20" maxlength="40" name="phone" value="<?php echo($R_Customer['customers_telephone']); ?>"></td>
  </tr>
 
  <tr>
-     <td width="20%" class="tdBlue"><b><?php echo EMAIL; ?></b></td>
+     <td width="20%"><b><?php echo EMAIL; ?></b></td>
      <td width="80%"><input type="text" size="20" maxlength="40" name="email" value="<?php echo($R_Customer['customers_email_address']); ?>"></a>
      <?php
     if ($email_warning) {
-        echo EMAIL_IN_USE;
+        echo '<p class="text-danger">' . EMAIL_IN_USE . '</p>';
     }
     ?>
      </td>
  </tr>
 
  <tr>
- <td width="20%" class="tdBlue"><b><?php echo BIRTHDAY; ?></b></td>
+ <td width="20%"><b><?php echo BIRTHDAY; ?></b></td>
  <td width="26%">
         <input type="text" size="2" maxlength="2" name="dob_month" value="<?php echo($R_Customer['month']); ?>"> /
         <input type="text" size="2" maxlength="2" name="dob_day" value="<?php echo($R_Customer['day']); ?>"> /
@@ -170,13 +186,18 @@ if ( ($R_Customer['day'] < 1) && ($R_Customer['day'] < 1) ) {
  </tr>
 
  <tr height="35px">
- <td width="100%" class="tdBlue" colspan="2" align="center">
+ <td width="100%" colspan="2" align="center">
   <?php if ($invalid_address) { ?>
-      <a class="button-disabled" title="<?php echo SUBMIT_BUTTON_TITLE; ?>" href="#" onclick="this.blur();"><span><?php echo SUBMIT_CHANGES; ?></span></a>
+		<a href="#" class="btn btn-default btn-sm" disabled="disabled" role="button" onclick="this.blur();"><?php echo SUBMIT_CHANGES; ?></a>
+		
+      <!--<a class="button-disabled" title="<?php //echo SUBMIT_BUTTON_TITLE; ?>" href="#" onclick="this.blur();"><span><?php //echo SUBMIT_CHANGES; ?></span></a>-->
    <?php } else { ?>
-      <a class="button" title="<?php echo SUBMIT_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); document.EditCustomer.submit();"><span><?php echo SUBMIT_CHANGES; ?></span></a>
+      <a href="#" class="btn btn-success btn-sm" role="button" onclick="this.blur(); document.EditCustomer.submit();"><?php echo SUBMIT_CHANGES; ?></a>
+	  
+      <!--<a class="button" title="<?php //echo SUBMIT_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); document.EditCustomer.submit();"><span><?php //echo SUBMIT_CHANGES; ?></span></a>-->
    <?php } ?>
-  <a class="button" title="<?php echo BACK_BUTTON_TITLE; ?>" href="#"  onclick="this.blur(); window.history.go(-1);"><span><?php echo BACK; ?></span></a>
+   <a href="#" class="btn btn-default btn-sm" role="button" onclick="this.blur(); window.history.go(-1);"><?php echo BACK; ?></a>
+  <!--<a class="button" title="<?php //echo BACK_BUTTON_TITLE; ?>" href="#"  onclick="this.blur(); window.history.go(-1);"><span><?php //echo BACK; ?></span></a>-->
  </td>
  </tr>
  </table>
@@ -186,6 +207,14 @@ if ( ($R_Customer['day'] < 1) && ($R_Customer['day'] < 1) ) {
 </table>
 
 
-<?php include("includes/footer.php"); ?>
-</body>
+	  <footer class="footer">
+        <?php include("includes/footer.php"); ?>
+      </footer>
+    </div> <!-- /container -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	<!-- include jquery and bootstrap -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  </body>
 </html>

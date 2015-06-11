@@ -70,136 +70,169 @@ $Q_Address = mysql_query("SELECT ab.*, co.countries_name, z.zone_name, dayofmont
 	co.countries_id = ab.entry_country_id");
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-	<?php if ($updated == 1 && !$email_warning) { ?>
-		<meta http-equiv="refresh" content="1;url=customer.php?CustomerID=<?php echo ($_GET['CustomerID']); ?>">
-		<?php } ?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <link rel="icon" href="favicon.ico">
 
-       <title><?php echo($POSName); ?></title>
-       <link rel="Stylesheet" href="css/style.css">
-       <script language="JavaScript" src="javascript.js" type="text/javascript"></script>
-</head>
+    <title><?php echo($POSName) . ': ' . TITLE; ?></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="user.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+  </head>
 <body>
-<?php include("includes/header.php"); ?>
+<div class="container">
+  <?php include("includes/header.php"); ?>
+   <form class="form-horizontal" name="EditAddress" action="customer_edit_address.php?CustomerID=<?php echo $customer_id; ?>&AddressID=<?php echo $address_id; ?>&submit=1" method="post">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+		  <h3 class="panel-title text-center"><?php echo(CUSTOMER_INFORMATION . ' ' . $R_Customer['customers_firstname'] . ' ' . $R_Customer['customers_lastname']); ?></h3>
+		</div>
+		<div class="panel-body">
+		<?php
+		if (mysql_affected_rows()==0) {
+		   $invalid_address = 1;
+		   echo '<div class="alert alert-danger" role="alert">' . NO_VALID_ADDRESS_RETURNED . '</div>';
+		}
 
-<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center">
- <tr>
-  <td width="100%">
+		while($R_Address = mysql_fetch_assoc($Q_Address)) {
 
- <form name="EditAddress" action="customer_edit_address.php?CustomerID=<?php echo $customer_id; ?>&AddressID=<?php echo $address_id; ?>&submit=1" method="post">
-
- <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
- <tr>
-     <td width="100%" class="tdBlue" colspan="2" align="center">
-      <b><?php echo(CUSTOMER_INFORMATION . ' ' . $R_Customer['customers_firstname'] . ' ' . $R_Customer['customers_lastname']); ?></b>
-     </td>
- </tr>
+		?>
+		  <div class="form-group">
+			<label for="company" class="col-sm-2 control-label"><?php echo COMPANY; ?></label>
+			  <div class="col-sm-10">
+				<input type="text" name="company" value="<?php echo($R_Address['entry_company']); ?>" class="form-control" id="company" placeholder="<?php echo COMPANY; ?>">
+			  </div>
+		  </div>
+		  <div class="form-group">
+			<label for="fname" class="col-sm-2 control-label"><?php echo FIRST_NAME; ?></label>
+			  <div class="col-sm-10">
+				<input type="text" name="fname" value="<?php echo($R_Address['entry_firstname']); ?>" class="form-control" id="fname" placeholder="<?php echo FIRST_NAME; ?>">
+				<span class="glyphicon glyphicon-asterisk form-control-feedback inputRequirement"></span>
+			  </div>
+		  </div>
+		  <div class="form-group">
+			<label for="lname" class="col-sm-2 control-label"><?php echo LAST_NAME; ?></label>
+			  <div class="col-sm-10">
+				<input type="text" name="lname" value="<?php echo($R_Address['entry_lastname']); ?>" class="form-control" id="lname" placeholder="<?php echo LAST_NAME; ?>">
+				<span class="glyphicon glyphicon-asterisk form-control-feedback inputRequirement"></span>
+			  </div>
+		  </div>
+		  <div class="form-group">
+			<label for="street" class="col-sm-2 control-label"><?php echo ADDRESS; ?></label>
+			  <div class="col-sm-10">
+				<input type="text" name="street" value="<?php echo($R_Address['entry_street_address']); ?>" class="form-control" id="street" placeholder="<?php echo ADDRESS; ?>">
+			  </div>
+		  </div>
+		  <div class="form-group">
+			<label for="suburb" class="col-sm-2 control-label"><?php echo SUBURB; ?></label>
+			  <div class="col-sm-10">
+				<input type="text" name="suburb" value="<?php echo($R_Address['entry_suburb']); ?>" class="form-control" id="suburb" placeholder="<?php echo SUBURB; ?>">
+			  </div>
+		  </div>
+		  <div class="form-group">
+			<label for="city" class="col-sm-2 control-label"><?php echo CITY; ?></label>
+			  <div class="col-sm-10">
+				<input type="text" name="city" value="<?php echo($R_Address['entry_city']); ?>" class="form-control" id="city" placeholder="<?php echo CITY; ?>">
+			  </div>
+		  </div>
+		  <div class="form-group">
+			<label for="entry_zone_id" class="col-sm-2 control-label"><?php echo STATE; ?></label>
+				<div class="col-sm-10">
+					<select class="form-control" name="state">
+					<?php
+					$default_zone_query = mysql_query("select configuration_value as zone_id from " . CONFIGURATION . " where configuration_key = 'STORE_ZONE'");
+					$default_zone = mysql_fetch_array($default_zone_query);
+							 
+					$Q_Zone = mysql_query("SELECT * FROM " . ZONES . " ORDER BY zone_name");
+						while($R_Zone = mysql_fetch_assoc($Q_Zone)){
+							if($_POST['entry_zone_id'] == $R_Zone['zone_id']){
+								echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
+							}elseif(!$_POST['entry_zone_id'] && $R_Zone['zone_id'] == $default_zone['zone_id']){ 
+								echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
+							}else{
+								echo("<option value=\"" . $R_Zone['zone_id'] . "\">" . $R_Zone['zone_name'] . "</option>\n");
+							}
+						}
+					?>
+					</select>
+				</div>
+		  </div>
+		  <div class="form-group">
+			<label for="zip" class="col-sm-2 control-label"><?php echo POST_CODE; ?></label>
+			  <div class="col-sm-10">
+				<input type="text" name="zip" value="<?php echo($R_Address['entry_postcode']); ?>" class="form-control" id="zip" placeholder="<?php echo POST_CODE; ?>">
+			  </div>
+		  </div>
+		  <div class="form-group">
+			<label for="entry_country_id" class="col-sm-2 control-label"><?php echo COUNTRY; ?></label>
+				<div class="col-sm-10">
+					<select class="form-control" name="country">
+					<?php
+					$Q_Country = mysql_query("SELECT * FROM " . COUNTRIES . " ORDER BY countries_name");
+					 while($R_Country = mysql_fetch_assoc($Q_Country)){
+						if($R_Address['entry_country_id'] == $R_Country['countries_id']){
+							echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
+						}elseif(!$R_Address['entry_country_id'] && $R_Country['countries_id'] == 223){
+							echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
+						}else{
+							echo("<option value=\"" . $R_Country['countries_id'] . "\">" . $R_Country['countries_name'] . "</option>\n");
+						}
+					 }
+					 
+					?>
+					</select>
+				</div>
+		  </div>
+		  
 
 <?php
-if (mysql_affected_rows()==0) {
-   $invalid_address = 1;
-   echo("<tr><td colspan=\"2\"><font color=\"red\"><br><b><center>" . NO_VALID_ADDRESS_RETURNED . "</center></font><br></td></tr>");
-}
-
-while($R_Address = mysql_fetch_assoc($Q_Address)) {
-
-?>
- <tr>
-     <td width="20%" class="tdBlue"><b><?php echo COMPANY; ?></b></td>
-     <td width="80%"><input type="text" size="20" maxlength="40" name="company" value="<?php echo($R_Address['entry_company']); ?>"></td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo FULL_NAME; ?></b></td>
-     <td>
-        <input type="text" size="20" maxlength="40" name="fname" value="<?php echo($R_Address['entry_firstname']); ?>">
-        <input type="text" size="20" maxlength="40" name="lname" value="<?php echo($R_Address['entry_lastname']); ?>">
-     </td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo ADDRESS; ?></b></td>
-     <td><input type="text" size="20" maxlength="40" name="street" value="<?php echo($R_Address['entry_street_address']); ?>"></td>
- </tr>
- <tr>
-     <td class="tdBlue"><b><?php echo SUBURB; ?></b></td>
-     <td><input type="text" size="20" maxlength="40" name="suburb" value="<?php echo($R_Address['entry_suburb']); ?>"></td>
- </tr>
- <tr>
-    <td class="tdBlue"><b><?php echo CITY; ?></b></td>
-    <td ><input type="text" size="20" maxlength="40" name="city" value="<?php echo($R_Address['entry_city']); ?>"></td>
- </tr>
-
- <tr>
-     <td class="tdBlue"><b><?php echo STATE; ?></b></td>
-     <td>
-     <select name="state">
-     <?php
-     $default_zone_query = mysql_query("select configuration_value as zone_id from " . CONFIGURATION . " where configuration_key = 'STORE_ZONE'");
-     $default_zone = mysql_fetch_array($default_zone_query);
-
-
-     $Q_Zone = mysql_query("SELECT * FROM " . ZONES . " ORDER BY zone_name");
-     while($R_Zone = mysql_fetch_assoc($Q_Zone)){
-        if($R_Address['entry_zone_id'] == $R_Zone['zone_id']){
-            echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
-        }elseif(!$R_Address['entry_zone_id'] && $R_Zone['zone_id'] == $default_zone['zone_id']){ // Massachusets
-            echo("<option value=\"" . $R_Zone['zone_id'] . "\" selected>" . $R_Zone['zone_name'] . "</option>\n");
-        }else{
-            echo("<option value=\"" . $R_Zone['zone_id'] . "\">" . $R_Zone['zone_name'] . "</option>\n");
-        }
-     }
-     ?>
-     </select>
-     </td>
- </tr>
-
- <tr>
-     <td class="tdBlue"><b><?php echo POST_CODE; ?></b></td>
-     <td><input type="text" size="20" maxlength="40" name="zip" value="<?php echo($R_Address['entry_postcode']); ?>"></td>
- </tr>
-
- <tr>
-     <td class="tdBlue"><b><?php echo COUNTRY; ?></b></td>
-     <td>
-     <select name="country">
-     <?php
-     $Q_Country = mysql_query("SELECT * FROM " . COUNTRIES . " ORDER BY countries_name");
-     while($R_Country = mysql_fetch_assoc($Q_Country)){
-        if($R_Address['entry_country_id'] == $R_Country['countries_id']){
-            echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
-        }elseif(!$R_Address['entry_country_id'] && $R_Country['countries_id'] == 223){
-            echo("<option value=\"" . $R_Country['countries_id'] . "\" selected>" . $R_Country['countries_name'] . "</option>\n");
-        }else{
-            echo("<option value=\"" . $R_Country['countries_id'] . "\">" . $R_Country['countries_name'] . "</option>\n");
-        }
-     }
-     ?>
-     </select>
-     </td>
- </tr>
-
-
-<?php
 }
 ?>
- <tr height="35px">
-     <td width="100%" class="tdBlue" colspan="2" align="center">
-      <?php if ($invalid_address) { ?>
-          <a class="button-disabled" title="<?php echo SUBMIT_BUTTON_TITLE; ?>" href="#" onclick="this.blur();"><span><?php echo SUBMIT_CHANGES; ?></span></a>
-       <?php } else { ?>
-          <a class="button" title="<?php echo SUBMIT_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); document.EditAddress.submit();"><span><?php echo SUBMIT_CHANGES; ?></span></a>
-       <?php } ?>
-      <a class="button" title="<?php echo BACK_BUTTON_TITLE; ?>" href="#"  onclick="this.blur(); window.history.go(-1);"><span><?php echo BACK; ?></span></a>
-     </td>
- </tr>
- </table>
+		  <div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+			  <?php if ($invalid_address) { ?>
+			  <a href="#" class="btn btn-success btn-sm" disabled="disabled" role="button" onclick="this.blur();"><?php echo SUBMIT_CHANGES; ?></a>
+				  <!--<a class="button-disabled" title="<?php //echo SUBMIT_BUTTON_TITLE; ?>" href="#" onclick="this.blur();"><span><?php //echo SUBMIT_CHANGES; ?></span></a>-->
+			   <?php } else { ?>
+				  <a href="#" class="btn btn-success btn-sm" role="button" onclick="this.blur(); document.EditAddress.submit();"><?php echo SUBMIT_CHANGES; ?></a>
+				  <!--<a class="button" title="<?php //echo SUBMIT_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); document.EditAddress.submit();"><span><?php //echo SUBMIT_CHANGES; ?></span></a>-->
+			   <?php } ?>
+			  <a href="index.php" class="btn btn-default btn-sm" role="button"><?php echo HOME; ?></a>
+			  <!--<a class="button" title="<?php// echo BACK_BUTTON_TITLE; ?>" href="#"  onclick="this.blur(); window.history.go(-1);"><span><?php //echo BACK; ?></span></a>-->
+			  </div>
+		  </div>
+ 
+		</div> <!-- end of panel body-->
+	</div> <!-- end of panel -->
   </form>
-  </td>
- </tr>
-</table>
 
 
-<?php include("includes/footer.php"); ?>
-</body>
+
+	  <footer class="footer">
+        <?php include("includes/footer.php"); ?>
+      </footer>
+    </div> <!-- /container -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	<!-- include jquery and bootstrap -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  </body>
 </html>
