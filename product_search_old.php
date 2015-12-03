@@ -157,59 +157,36 @@ if( (mysql_num_rows($Q_Product)==1) && ($_SESSION['Orders'][$_SESSION['CurrentOr
 $Query = str_replace("\'", "'", $Query); 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <link rel="icon" href="favicon.ico">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
-    <title><?php echo($POSName) . ': ' . TITLE; ?></title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-	<link href="user.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="jumbotron-narrow.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
-  </head>
+<html>
+<head>
+       <title><?php echo($POSName) . ': ' . TITLE; ?></title>
+       <link rel="Stylesheet" href="css/style.css">
+       <script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+</head>
 <body onload="document.ProductSearch.Query.focus();">
 
 <?php
 
 $PRODUCT_SEARCH = $Query;
+
+include("includes/header.php");
 ?>
-<div class="container">
-      
-		<?php include("includes/header.php"); ?>
-      <div class="row marketing">
+
 <table width="100%" border="0" cellpadding="2" cellspacing="0" align="center">
  <tr>
   <td width="100%">
   
 <?php if($Query){ ?>
- <table class="table" align="center">
+ <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
  <tr>
- <td align="center">
+ <td width="100%" class="tdBlue" colspan="6" align="center">
   <b><?php $results_count = mysql_num_rows($Q_Product);
            if ($results_count >= $maximum_search_results) {
-	           $results_string = '<div class="alert alert-info" role="alert">
-  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
-  ' . MORE_THAN . $maximum_search_results . RESULTS_FOUND . '  ' . DISPLAYING . $results_count . RESULTS . '</div>';
+	           $results_string = MORE_THAN . $maximum_search_results . RESULTS_FOUND . '  ' . DISPLAYING . $results_count . RESULTS;
            } else {
-	           $results_string = '<div class="alert alert-success" role="alert">
-  <span class="glyphicon glyphicon-tick" aria-hidden="true"></span> 
-  ' . DISPLAYING . $results_count . RESULTS . '</div>';
+	           $results_string = DISPLAYING . $results_count . RESULTS;
            }
            echo $results_string; 
      ?>
@@ -220,39 +197,35 @@ $PRODUCT_SEARCH = $Query;
   <form name="ProductSearch" method="get">
 	 <td width="100%" colspan="5" height="30px" class="tdHeader" align="center">
 		 <input type="text" name="Query" size="20" value="">
-		 <a class="btn btn-default btn-sm" role="button" title="<?php echo SEARCH_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); document.ProductSearch.submit();"><?php echo SEARCH; ?></a>
+		 <a class="button" title="<?php echo SEARCH_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); document.ProductSearch.submit();"><span><?php echo SEARCH; ?></span></a>
 		 <?php 
 			 if($_SESSION['CurrentOrderIndex'] == -1) { ; } // if no order don't display button to add non-inventory item to order
 			 else {
 		 ?>		 
-		<a class="btn btn-default btn-sm" role="button" title="<?php echo NON_INVENTORY_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='product_noninventory.php'"><?php echo NON_INVENTORY; ?></a>
+		<a class="button" title="<?php echo NON_INVENTORY_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='product_noninventory.php'"><span><?php echo NON_INVENTORY; ?></span></a>
 		 <?php } ?>	 
 	 </td>
   </form>
  </tr>
- </table>
- <table class="table table-striped table-condensed table-hover">
  <tr>
-   <thead>
-	 <th width="100" align="left"><b><?php echo PRODUCT_MODEL; ?></b></th>
-	 <th width="350" align="center"><b><?php echo PRODUCT_NAME; ?></b></th>
-	 <th width="70"  align="center"><b><?php echo QTY_IN_STOCK; ?></b></th>
-	 <th width="120"  align="center"><b><?php echo PRICE; ?></b></th>
-	 <th width="180" align="center"><b><?php echo ADD_TO_ORDER; ?></b></th>
-   </thead>
+	 <td width="100" class="tdBlue" align="center"><b><?php echo PRODUCT_MODEL; ?></b></td>
+	 <td width="400" class="tdBlue" align="center"><b><?php echo PRODUCT_NAME; ?></b></td>
+	 <td width="70"  class="tdBlue" align="center"><b><?php echo QTY_IN_STOCK; ?></b></td>
+	 <td width="70"  class="tdBlue" align="center"><b><?php echo PRICE; ?></b></td>
+	 <td width="180" class="tdBlue" align="center"><b><?php echo ADD_TO_ORDER; ?></b></td>
  </tr>
 <?php while($R_Product = mysql_fetch_assoc($Q_Product)){ ?>
- <tr>
-	 <td align="left">
+ <tr height="40px">
+	 <td width="100" align="center"><br>
 	  <?php echo($R_Product['products_model']); ?>
 	 </td>
-	 <td>
+	 <td width="400"><br>
 	  <a href="product.php?ProductID=<?php echo($R_Product['products_id']); ?>"><?php echo($R_Product['products_name']); ?></a>
 	 </td>
-	 <td align="center">
+	 <td width="70" align="center"><br>
 	  <?php echo($R_Product['products_quantity']); ?>
 	 </td>
-	 <td align="center">
+	 <td width="70" align="center"><br>
 	  <?php  
 	  	if ($R_Product['sales_price'] <  $R_Product['products_price']) {
 		  	if (IN_STORE_PRICING == 1) {
@@ -267,21 +240,21 @@ $PRODUCT_SEARCH = $Query;
 		  }
 	  ?>
 	 </td>
-	 <td align="center">
+	 <td width="180" align="center"><br>
 
 <?php 
 	 if($_SESSION['CurrentOrderIndex'] == -1) { // if no order button says add to new order
  ?>	
-		<a class="btn btn-default btn-xs" role="button" title="<?php echo ADD_TO_NEW_ORDER_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='action.php?Action=ItemNewOrder&ProductID=<?php echo($R_Product['products_id']); ?>'"><?php echo ADD_TO_NEW_ORDER; ?></a>
+		<a class="button" title="<?php echo ADD_TO_NEW_ORDER_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='action.php?Action=ItemNewOrder&ProductID=<?php echo($R_Product['products_id']); ?>'"?><span><?php echo ADD_TO_NEW_ORDER; ?></span></a>
 <?php } else { // otherwise, button says to add to existing order
 	?> 
-		<a class="btn btn-default btn-xs" role="button" title="<?php echo ADD_TO_ORDER_BUTTON_TITLE; ?>" onclick="this.blur(); window.location.href='action.php?Action=AddItem&ProductID=<?php echo($R_Product['products_id']); ?><?php  
+		<a class="button" title="<?php echo ADD_TO_ORDER_BUTTON_TITLE; ?>" href="#" onclick="this.blur(); window.location.href='action.php?Action=AddItem&ProductID=<?php echo($R_Product['products_id']); ?><?php  
             if ($_SESSION['Orders'][$_SESSION['CurrentOrderIndex']]->ReturnOrder == 1) {
                   echo ("&Quantity=-1");
                } else {
                   echo ("&Quantity=1");
                }
-      ?>'"><?php echo ADD_TO_ORDER; ?></a>
+      ?>'"?><span><?php echo ADD_TO_ORDER; ?></span></a>
 <?php } ?>
 	 </td>
  </tr>

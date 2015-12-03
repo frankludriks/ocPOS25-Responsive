@@ -1260,7 +1260,6 @@ class Order {
             }
             // -->
         </script>
-		//TABLE START
         
             <div class="panel panel-primary">
 					 <div class="panel-heading text-center"><?php $_SESSION['Orders'][$_SESSION['CurrentOrderIndex']]->PrintHeader(); ?></div>
@@ -1577,13 +1576,10 @@ class Order {
         <?php } ?>
         </table>
 		</div> <!--end of panel-->
-		//TABLE END
-        <br />
+
         <?php if (strlen($this->Comments) > 0) { // if there are comments ?>
-            <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
-                <tr><td width="100%" colspan="6" class="tdHeader" align="center"><b><?php echo COMMENTS; ?></b></td></tr>
-                <tr><td width="100%" colspan="6"><?php echo(nl2br($this->Comments)); ?><br></td></tr>
-            </table>
+            <div class="alert alert-warning text-center" role="alert"><h4><?php echo COMMENTS; ?></h4>
+                <?php echo(nl2br($this->Comments)); ?></div>
         <?php } ?>
         <?php
     }

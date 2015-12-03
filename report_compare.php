@@ -21,7 +21,7 @@ if($_REQUEST['RangeType']=="Through"){
 }
 
 include("includes/diagram.php");
-include("includes/header.php");
+
 
 // Cost and Gross variables throughout are only useful if a contribution like Stocktaking Cost has been installed that keeps track of the wholesale purchase price of inventory
 // add switch to turn on if stocktaking contrib is installed -- enable lines if installed
@@ -227,28 +227,50 @@ ImageDestroy($D->Img);
 
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-       <title><?php echo($POSName) . ': ' . TITLE; ?></title>
-       <link rel="Stylesheet" href="css/style.css">
-       <script language="JavaScript" src="javascript.js" type="text/javascript"></script>
-       <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-	   <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-</head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title><?php echo($POSName) . ': ' . TITLE; ?></title>
+	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="user.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+  </head>
 <body>
+  <div class="container">
+	<?php
+	
+	include("includes/header.php");
+	?>
 
-
-<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center">
+<table class="table">
  <tr>
   <td width="100%">
   
   
   <?php include("includes/report_compare_select.php"); ?><br>
   
- <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
+ <table class="table">
  <tr>
- <td width="100%" class="tdBlue" colspan="7" align="center">
+ <td width="100%" colspan="7" align="center">
   <b>
   <?php echo COMPARISON_REPORT2; ?> 
   </b>
@@ -260,16 +282,16 @@ ImageDestroy($D->Img);
  </td>
  </tr>
  <tr>
- <td width="16%" class="tdBlue" align="center"><b><?php echo DATE_PURCHASED; ?></b></td>
- <td width="14%" class="tdBlue" align="center"><b><?php echo ORDER_COUNT; ?></b></td>
- <!--<td width="14%" class="tdBlue" style="background-Color:#D5553F" align="center"><b><?php echo TOTAL_COST; ?></b></td>-->
- <td width="14%" class="tdBlue" style="background-Color:#507FD5" align="center"><b><?php echo PRICE; ?></b></td>
- <td width="14%" class="tdBlue" style="background-Color:#C4C4C4" align="center"><b><?php echo TAX; ?></b></td>
- <td width="14%" class="tdBlue" style="background-Color:#5BC558" align="center"><b><?php echo TOTAL; ?></b></td>
- <!-- <td width="14%" class="tdBlue" style="background-Color:#FFB400" align="center"><b><?php echo GROSS; ?></b></td> -->
+ <td width="16%" align="center"><b><?php echo DATE_PURCHASED; ?></b></td>
+ <td width="14%" align="center"><b><?php echo ORDER_COUNT; ?></b></td>
+ <!--<td width="14%" style="background-Color:#D5553F" align="center"><b><?php echo TOTAL_COST; ?></b></td>-->
+ <td width="14%" style="background-Color:#507FD5" align="center"><b><?php echo PRICE; ?></b></td>
+ <td width="14%" style="background-Color:#C4C4C4" align="center"><b><?php echo TAX; ?></b></td>
+ <td width="14%" style="background-Color:#5BC558" align="center"><b><?php echo TOTAL; ?></b></td>
+ <!-- <td width="14%" style="background-Color:#FFB400" align="center"><b><?php echo GROSS; ?></b></td> -->
  </tr>
  <tr>
- <td width="16%" class="tdBlue" align="center"><b>
+ <td width="16%" align="center"><b>
 <?php
 if($_REQUEST['CompareType']=="Day"){
 	echo($_REQUEST['Day1_Month'] . "-" . $_REQUEST['Day1_Day'] . "-" . $_REQUEST['Day1_Year']);
@@ -288,7 +310,7 @@ if($_REQUEST['CompareType']=="Day"){
  <!-- <td width="14%" align="right"><?php echo $default_currency_symbol . (number_format($T_Gross[0], 2, '.', '')); ?></td> -->
  </tr>
  <tr>
- <td width="16%" class="tdBlue" align="center"><b>
+ <td width="16%" align="center"><b>
 <?php
 if($_REQUEST['CompareType']=="Day"){
 	echo($_REQUEST['Day2_Month'] . "-" . $_REQUEST['Day2_Day'] . "-" . $_REQUEST['Day2_Year']);
@@ -308,9 +330,9 @@ if($_REQUEST['CompareType']=="Day"){
  </tr>
  </table><br>
  
- <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
+ <table class="table">
  <tr>
- <td width="100%" class="tdBlue" colspan="8" align="center">
+ <td width="100%" colspan="8" align="center">
   <b>
   <?php echo PAYMENT_TYPE_REPORT; ?>
 <?php
@@ -327,50 +349,50 @@ if($_REQUEST['CompareType']=="Day"){
  </td>
  </tr>
  <tr>
- <td width="16%" class="tdBlue" align="center"><b><?php echo PAYMENT_METHOD; ?></b></td>
- <td width="12%" class="tdBlue" align="center"><b><?php echo ORDER_COUNT; ?></b></td>
- <td width="12%" class="tdBlue" align="center"><b><?php echo PERCENT; ?></b></td>
- <!-- <td width="12%" class="tdBlue" align="center"><b><?php echo TOTAL_COST; ?></b></td> -->
- <td width="12%" class="tdBlue" align="right"><b><?php echo PRICE; ?></b></td>
- <td width="12%" class="tdBlue" align="right"><b><?php echo TAX; ?></b></td>
- <td width="12%" class="tdBlue" align="right"><b><?php echo TOTAL; ?></b></td>
- <!-- <td width="12%" class="tdBlue" align="center"><b><?php echo GROSS; ?></b></td> -->
+ <td width="16%" align="center"><b><?php echo PAYMENT_METHOD; ?></b></td>
+ <td width="12%" align="center"><b><?php echo ORDER_COUNT; ?></b></td>
+ <td width="12%" align="center"><b><?php echo PERCENT; ?></b></td>
+ <!-- <td width="12%" align="center"><b><?php echo TOTAL_COST; ?></b></td> -->
+ <td width="12%" align="right"><b><?php echo PRICE; ?></b></td>
+ <td width="12%" align="right"><b><?php echo TAX; ?></b></td>
+ <td width="12%" align="right"><b><?php echo TOTAL; ?></b></td>
+ <!-- <td width="12%" align="center"><b><?php echo GROSS; ?></b></td> -->
  </tr>
  <?php
  $Total_Num[$i] = $Cash_Num[$i] + $CC_Num[$i] + $Check_Num[$i];
  if(!$Total_Num[$i]) $Total_Num[$i] = 1;
  ?>
- <tr>
- <td width="16%" style="background-color: #D7ECA0" align="center"><b><?php echo CASH; ?></b></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo($Cash_Num[$i]); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo(round($Cash_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
+ <tr class="success">
+ <td width="16%" align="center"><b><?php echo CASH; ?></b></td>
+ <td width="12%" align="right"><?php echo($Cash_Num[$i]); ?></td>
+ <td width="12%" align="right"><?php echo(round($Cash_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
  <!-- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalCost[$i], 2, '.', '')); ?></td> -->
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalPrice[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalTax[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_GrandTotal[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalPrice[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalTax[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_GrandTotal[$i], 2, '.', '')); ?></td>
  <!-- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_Gross[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php if($Cash_Num[$i]){ ?>
- <tr>
- <td width="16%" style="background-color: #D7ECA0" align="center"></td>
- <td width="12%" style="background-color: #D7ECA0" align="center"></td>
- <td width="12%" style="background-color: #D7ECA0" align="center"><b><?php echo AVERAGE; ?></b></td>
+ <tr class="info">
+ <td width="16%" align="center"></td>
+ <td width="12%" align="center"></td>
+ <td width="12%" align="center"><b><?php echo AVERAGE; ?></b></td>
  <!-- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalCost[$i]/$Cash_Num[$i], 2, '.', '')); ?></td> -->
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalPrice[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalTax[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_GrandTotal[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalPrice[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalTax[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_GrandTotal[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
  <!-- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_Gross[$i]/$Cash_Num[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php } ?>
- <tr><td width="100%" class="tdBlue" colspan="8"><br></td></tr>
- <tr>
- <td width="16%" style="background-color: #AAF3ED" align="center"><b><?php echo CC; ?></b></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo($CC_Num[$i]); ?></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo(round($CC_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
+ <tr><td width="100%" colspan="8"><br></td></tr>
+ <tr class="warning">
+ <td width="16%" align="center"><b><?php echo CC; ?></b></td>
+ <td width="12%" align="right"><?php echo($CC_Num[$i]); ?></td>
+ <td width="12%" align="right"><?php echo(round($CC_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
  <!-- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalCost[$i], 2, '.', '')); ?></td> -->
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalPrice[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalTax[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_GrandTotal[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalPrice[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalTax[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_GrandTotal[$i], 2, '.', '')); ?></td>
  <!-- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_Gross[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php if($CC_Num[$i]){ ?>
@@ -385,7 +407,7 @@ if($_REQUEST['CompareType']=="Day"){
  <!-- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_Gross[$i]/$CC_Num[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php } ?>
- <tr><td width="100%" class="tdBlue" colspan="8"><br></td></tr>
+ <tr><td width="100%" colspan="8"><br></td></tr>
  <tr>
  <td width="16%" style="background-color: #CC99FF" align="center"><b><?php echo CHEC; ?></b></td>
  <td width="12%" style="background-color: #CC99FF" align="right"><?php echo($Check_Num[$i]); ?></td>
@@ -411,9 +433,9 @@ if($_REQUEST['CompareType']=="Day"){
  </table><br>
 
   
- <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
+ <table class="table">
  <tr>
- <td width="100%" class="tdBlue" colspan="8" align="center">
+ <td width="100%" colspan="8" align="center">
   <b>
   <?php echo PAYMENT_TYPE_REPORT; ?>
 <?php
@@ -430,79 +452,79 @@ if($_REQUEST['CompareType']=="Day"){
  </td>
  </tr>
  <tr>
- <td width="16%" class="tdBlue" align="center"><b><?php echo PAYMENT_METHOD; ?></b></td>
- <td width="12%" class="tdBlue" align="center"><b><?php echo ORDER_COUNT; ?></b></td>
- <td width="12%" class="tdBlue" align="center"><b><?php echo PERCENT; ?></b></td>
- <!-- <td width="12%" class="tdBlue" align="center"><b><?php echo TOTAL_COST; ?></b></td>-->
- <td width="12%" class="tdBlue" align="right"><b><?php echo PRICE; ?></b></td>
- <td width="12%" class="tdBlue" align="right"><b><?php echo TAX; ?></b></td>
- <td width="12%" class="tdBlue" align="right"><b><?php echo TOTAL; ?></b></td>
- <!-- <td width="12%" class="tdBlue" align="center"><b><?php echo GROSS; ?></b></td> -->
+ <td width="16%" align="center"><b><?php echo PAYMENT_METHOD; ?></b></td>
+ <td width="12%" align="center"><b><?php echo ORDER_COUNT; ?></b></td>
+ <td width="12%" align="center"><b><?php echo PERCENT; ?></b></td>
+ <!-- <td width="12%" align="center"><b><?php echo TOTAL_COST; ?></b></td>-->
+ <td width="12%" align="right"><b><?php echo PRICE; ?></b></td>
+ <td width="12%" align="right"><b><?php echo TAX; ?></b></td>
+ <td width="12%" align="right"><b><?php echo TOTAL; ?></b></td>
+ <!-- <td width="12%" align="center"><b><?php echo GROSS; ?></b></td> -->
  </tr>
  <?php
  $Total_Num[$i] = $Cash_Num[$i] + $CC_Num[$i] + $Check_Num[$i];
  if(!$Total_Num[$i]) $Total_Num[$i] = 1;
  ?>
- <tr>
- <td width="16%" style="background-color: #D7ECA0" align="center"><b><?php echo CASH; ?></b></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo($Cash_Num[$i]); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo(round($Cash_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
+ <tr class="success">
+ <td width="16%" align="center"><b><?php echo CASH; ?></b></td>
+ <td width="12%" align="right"><?php echo($Cash_Num[$i]); ?></td>
+ <td width="12%" align="right"><?php echo(round($Cash_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
  <!-- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalCost[$i], 2, '.', '')); ?></td> -->
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalPrice[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalTax[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_GrandTotal[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalPrice[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalTax[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_GrandTotal[$i], 2, '.', '')); ?></td>
  <!-- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_Gross[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php if($Cash_Num[$i]){ ?>
- <tr>
- <td width="16%" style="background-color: #D7ECA0" align="center"></td>
- <td width="12%" style="background-color: #D7ECA0" align="center"></td>
- <td width="12%" style="background-color: #D7ECA0" align="center"><b><?php echo AVERAGE; ?></b></td>
+ <tr class="info">
+ <td width="16%" align="center"></td>
+ <td width="12%" align="center"></td>
+ <td width="12%" align="center"><b><?php echo AVERAGE; ?></b></td>
  <!-- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalCost[$i]/$Cash_Num[$i], 2, '.', '')); ?></td> -->
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalPrice[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalTax[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_GrandTotal[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalPrice[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_TotalTax[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Cash_GrandTotal[$i]/$Cash_Num[$i], 2, '.', '')); ?></td>
  <!-- <td width="12%" style="background-color: #D7ECA0" align="right"><?php echo $default_currency_symbol . (number_format($Cash_Gross[$i]/$Cash_Num[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php } ?>
- <tr><td width="100%" class="tdBlue" colspan="8"><br></td></tr>
- <tr>
- <td width="16%" style="background-color: #AAF3ED" align="center"><b><?php echo CC; ?></b></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo($CC_Num[$i]); ?></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo(round($CC_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
+ <tr><td width="100%" colspan="8"><br></td></tr>
+ <tr class="warning">
+ <td width="16%" align="center"><b><?php echo CC; ?></b></td>
+ <td width="12%" align="right"><?php echo($CC_Num[$i]); ?></td>
+ <td width="12%" align="right"><?php echo(round($CC_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
  <!-- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalCost[$i], 2, '.', '')); ?></td> -->
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalPrice[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalTax[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_GrandTotal[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalPrice[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalTax[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_GrandTotal[$i], 2, '.', '')); ?></td>
  <!-- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_Gross[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php if($CC_Num[$i]){ ?>
- <tr>
- <td width="16%" style="background-color: #AAF3ED" align="center"></td>
- <td width="12%" style="background-color: #AAF3ED" align="center"></td>
- <td width="12%" style="background-color: #AAF3ED" align="center"><b><?php echo AVERAGE; ?></b></td>
+ <tr class="danger">
+ <td width="16%" align="center"></td>
+ <td width="12%" align="center"></td>
+ <td width="12%" align="center"><b><?php echo AVERAGE; ?></b></td>
  <!-- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalCost[$i]/$CC_Num[$i], 2, '.', '')); ?></td> -->
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalPrice[$i]/$CC_Num[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalTax[$i]/$CC_Num[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_GrandTotal[$i]/$CC_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalPrice[$i]/$CC_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_TotalTax[$i]/$CC_Num[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($CC_GrandTotal[$i]/$CC_Num[$i], 2, '.', '')); ?></td>
  <!-- <td width="12%" style="background-color: #AAF3ED" align="right"><?php echo $default_currency_symbol . (number_format($CC_Gross[$i]/$CC_Num[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php } ?>
- <tr><td width="100%" class="tdBlue" colspan="8"><br></td></tr>
- <tr>
- <td width="16%" style="background-color: #CC99FF" align="center"><b><?php echo CHECK; ?></b></td>
- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo($Check_Num[$i]); ?></td>
- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo(round($Check_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
+ <tr><td width="100%" colspan="8"><br></td></tr>
+ <tr class="active">
+ <td width="16%" align="center"><b><?php echo CHECK; ?></b></td>
+ <td width="12%" align="right"><?php echo($Check_Num[$i]); ?></td>
+ <td width="12%" align="right"><?php echo(round($Check_Num[$i]/$Total_Num[$i] * 100)); ?>%</td>
  <!-- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo $default_currency_symbol . (number_format($Check_TotalCost[$i], 2, '.', '')); ?></td> -->
- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo $default_currency_symbol . (number_format($Check_TotalPrice[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo $default_currency_symbol . (number_format($Check_TotalTax[$i], 2, '.', '')); ?></td>
- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo $default_currency_symbol . (number_format($Check_GrandTotal[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Check_TotalPrice[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Check_TotalTax[$i], 2, '.', '')); ?></td>
+ <td width="12%" align="right"><?php echo $default_currency_symbol . (number_format($Check_GrandTotal[$i], 2, '.', '')); ?></td>
  <!-- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo $default_currency_symbol . (number_format($Check_Gross[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php if($Check_Num[$i]){ ?>
- <tr>
- <td width="16%" style="background-color: #CC99FF" align="center"></td>
- <td width="12%" style="background-color: #CC99FF" align="center"></td>
+ <tr class="success">
+ <td width="16%" align="center"></td>
+ <td width="12%" align="center"></td>
  <td width="12%" style="background-color: #CC99FF" align="center"><b><?php echo AVERAGE; ?></b></td>
  <!-- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo $default_currency_symbol . (number_format($Check_TotalCost[$i]/$Check_Num[$i], 2, '.', '')); ?></td>-->
  <td width="12%" style="background-color: #CC99FF" align="right"><?php echo $default_currency_symbol . (number_format($Check_TotalPrice[$i]/$Check_Num[$i], 2, '.', '')); ?></td>
@@ -511,15 +533,15 @@ if($_REQUEST['CompareType']=="Day"){
  <!-- <td width="12%" style="background-color: #CC99FF" align="right"><?php echo $default_currency_symbol . (number_format($Check_Gross[$i]/$Check_Num[$i], 2, '.', '')); ?></td> -->
  </tr>
  <?php } ?>
- <tr><td width="100%" class="tdBlue" colspan= "8"><br></td></tr>
+ <tr><td width="100%" colspan= "8"><br></td></tr>
  <tr>
- <td width="20%" class="tdBlue" align="center"><b><?php echo GRAND_TOTAL; ?></b></td>
- <td width="16%" class="tdBlue" align="right"><b><?php echo($Check_Num[$i] + $CC_Num[$i] + $Cash_Num[$i]); ?></b></td>
- <td width="16%" class="tdBlue" align="right"><b>100%</b></td>
- <td width="16%" class="tdBlue" align="right"><b><?php  echo $default_currency_symbol . (number_format(($Check_TotalPrice[$i] + $Cash_TotalPrice[$i] + $CC_TotalPrice[$i]), 2, '.', '')); ?></b></td>
- <td width="16%" class="tdBlue" align="right"><b><?php  echo $default_currency_symbol . (number_format(($Check_TotalTax[$i] + $Cash_TotalTax[$i] + $CC_TotalTax[$i]), 2, '.', '')); ?></b></td>
- <td width="16%" class="tdBlue" align="right"><b><?php  echo $default_currency_symbol . (number_format(($Check_GrandTotal[$i] + $Cash_GrandTotal[$i] + $CC_GrandTotal[$i]), 2, '.', '')); ?></b></td>
-  <!-- <td width="16%" class="tdBlue" align="right"><b><?php  echo $default_currency_symbol . (number_format(($Check_Gross[$i] + $Check_Gross[$i] + $Check_Gross[$i]), 2, '.', '')); ?></b></td> -->
+ <td width="20%" align="center"><b><?php echo GRAND_TOTAL; ?></b></td>
+ <td width="16%" align="right"><b><?php echo($Check_Num[$i] + $CC_Num[$i] + $Cash_Num[$i]); ?></b></td>
+ <td width="16%" align="right"><b>100%</b></td>
+ <td width="16%" align="right"><b><?php  echo $default_currency_symbol . (number_format(($Check_TotalPrice[$i] + $Cash_TotalPrice[$i] + $CC_TotalPrice[$i]), 2, '.', '')); ?></b></td>
+ <td width="16%" align="right"><b><?php  echo $default_currency_symbol . (number_format(($Check_TotalTax[$i] + $Cash_TotalTax[$i] + $CC_TotalTax[$i]), 2, '.', '')); ?></b></td>
+ <td width="16%" align="right"><b><?php  echo $default_currency_symbol . (number_format(($Check_GrandTotal[$i] + $Cash_GrandTotal[$i] + $CC_GrandTotal[$i]), 2, '.', '')); ?></b></td>
+  <!-- <td width="16%" align="right"><b><?php  echo $default_currency_symbol . (number_format(($Check_Gross[$i] + $Check_Gross[$i] + $Check_Gross[$i]), 2, '.', '')); ?></b></td> -->
  </tr>
  </table><br>
  
@@ -529,6 +551,14 @@ if($_REQUEST['CompareType']=="Day"){
 </table>
 
 
-<?php include("includes/footer.php"); ?>
-</body>
+	  <footer class="footer">
+        <?php include("includes/footer.php"); ?>
+      </footer>
+    </div> <!-- /container -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	<!-- include jquery and bootstrap -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  </body>
 </html>

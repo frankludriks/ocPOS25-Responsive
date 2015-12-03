@@ -1,1 +1,3 @@
 includes/db.php
+error_log
+install.php.delete

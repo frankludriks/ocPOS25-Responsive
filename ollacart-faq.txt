@@ -1,0 +1,99 @@
+Frequently Asked Questions
+
+Why OllaCart Point of Sale?
+
+OllaCart Point of Sale is the key to smooth order processing. Why? Because it uses your store database natively, there is no data synchronization. You don't have to process website orders through the point of sale just to keep accurate inventory and customer data. It's all in one place, one database, no synchronization necessary.
+
+Can I use my existing printer, scan gun, and receipt printer?
+
+Many modern point of sale solutions now simply use PC hardware with Windows. All you need to access OllaCart Point of Sale is a web browser. Make sure that the receipt printer is available to Windows, and you will be able to print receipts. (They'll look better if you turn off the browser print header and footer.). Keyboard wedge barcode scanners work just like a keyboard. In other words, if you open up Notepad, and scan an item, the barcode will be typed into the Notepad window. These types of scan guns work wonderfully with OllaCart Point of Sale.
+
+Since OllaCart Point of Sale is technically running on the same web server as your web store, it is unlikely to be physically connected to your cash drawer. Cash drawers usually need your PC to send a special code to open them. Most of the time this is a simple code (see the Tip below), but it can vary for different models. In most cases, a web search will find instructions on how to create a batch file to send this special code and open your cash drawer.
+
+Tip: A common method to open the cash drawer is to simply send a "beep" to the port where the cash drawer is plugged in. You might want to try running our cash_drawer.bat on the PC where the cash drawer is connected to see if this will work in your case. The cash_drawer.bat file may need to be changed slightly depending on your setup. It currently reads:
+
+  echo ^G > LPT1
+
+Cash_drawer.bat is designed for a cash drawer that is plugged into the printer port. If the cash drawer is plugged into a serial port, change LPT1 to COM1 or COM2.
+  Note: If editing cash_drawer.bat is required, note that the ^G is a CTRL-G, not simply a ^ followed by a the letter G. As such, it may not display properly in Notepad or some other text editors.
+
+Do I have to enter all my products and customers again?
+
+Absolutely not! OllaCart Point of Sale uses the same database that your web store does. All of your customer and product data will be instantly available via the point of sale interface as soon as it is installed and configured.
+
+How can I use my products' barcodes?
+
+There are two main ways to do this:
+
+Enter the barcode numbers (with your scanner, if you want) as the product model for the product. This works well if you are not already using the product model field.
+Install a contribution (add-on) to osCommerce (or ZenCart, etc) that adds a new field to the product table specifically to use for barcodes. There are a few contributions that will do this for you. Contact us if you like, and we can explain further or arrange to install the add-on for you.
+Can I get a trial version?
+
+Of course! Click here to order a 14 day trial version and test it out on your own store!
+
+How many licenses do I need?
+
+Run as many terminals as you want on just one license! Unlike other systems that require additional licenses for every workstation, OllaCart Point of Sale only requires one license for the entire store. You can access it from any web browser.
+
+Can I customize it?
+
+OllaCart Point of Sale is written in PHP. This means that you can customize your installation to fit your needs. Add your own features, change the ones that are already there, or just change the look and feel of the site. You choose!
+
+Does it support feature x or feature y?
+
+osCommerce and its derivatives have thousands of freely available add-ons. It's possible that you'd like to use one of these contributions in your store, and need OllaCart Point of Sale to support it. No problem! Using the same ideas you use to install the contribution, you can customize your OllaCart Point of Sale installation to support the same new features!
+
+Remember, since OllaCart Point of Sale keeps its data in the same database as the rest of the web store, you have access to hundreds of tools to import data, export to accounting packages, or just to run custom reports.
+
+Will it conflict with other store customizations?
+
+No. OllaCart Point of Sale accesses the database directly. It does not require modification to any existing osCommerce, ZenCart, etc. files.
+
+What about product attributes?
+
+If your store uses QT Pro, then your store uses a slightly different way of keeping track of inventory. OllaCart Point of Sale interfaces with the default osCommerce method of inventory storage. Support for QT Pro may be included in future versions of OllaCart Point of Sale.
+
+Do I have to have an internet connection?
+
+OllaCart Point of Sale needs a network connection to your database server to function properly. For most scenarios, this will mean that an internet connection is required.
+
+Which payment methods can I use? Does it process credit cards?
+
+OllaCart Point of Sale supports cash, check, and credit card payments. It assumes that you already have the means to charge the customers' credit card. This can be a card swiper or another mechanism, like a web virtual terminal. There are no payment gateways included at this time.
+
+Does it support non-English languages?
+
+At this time, OllaCart Point of Sale supports English language only. This is due to a limitation in the current way that sales are recorded and reported.
+
+What about taxes?
+
+OllaCart Point of Sale uses the primary tax rate from your web store.
+
+Ok, but what about multiple tax rates?
+
+Let's say you have tax classes as follows:
+  Food Items, Non-Food Items.
+Let's say you have tax rates as follows: 
+  Food Items: 5% (local goverment) + 3% (state government)
+  Non-Food Items: 7% (local government) + 2% (state government)
+
+osCommerce will apply both the 5% and 3% for the Food Items, and similarly calculate both the 7% and 2% for the non-food items.
+ocPOS will apply only the first found tax rate for each tax class. If the 5% was created before the 3%, then that's the one it will use. It only supports one tax rate per tax class.
+
+If you have only one tax rate per tax class (i.e. Food Items: 5% and Non-Food Items: 7%) then it should work just fine.
+
+Compounding and prioritized tax classes are under consideration for a future release.
+
+Can I run this on Windows?
+
+Since OllaCart Point of Sale is accessed via a web browser, any operating system, including Windows, may be used to access OllaCart Point of Sale. The actual installation of OllaCart Point of Sale, however, is supported for use on Linux, FreeBSD, and OpenBSD systems. Most of the time you'll be uploading these files to your web hosting company. Though, most web hosting companies use Linux, verifying the operating system they use will be a good idea. OllaCart Point of Sale may function properly on other operating systems, but supportability is not guaranteed.
+
+What happened to WebCart Point of Sale?
+
+WebCart Point of Sale has been renamed to OllaCart Point of Sale to avoid naming confusion with other products.
+
+
+
+Demos and Purchasing
+
+Ready to try it out? OllaCart Point of Sale is attractively priced at $149 per store. 14-day demo licenses are free. See http://www.webcart-consulting.com/orders for more details.

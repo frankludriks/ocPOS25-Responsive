@@ -17,20 +17,38 @@ if(!$session->logged_in) {
 
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-       <title><?php echo($POSName) . ': ' . TITLE; ?></title>
-       <link rel="Stylesheet" href="css/style.css">
-       <script language="JavaScript" src="javascript.js" type="text/javascript"></script>
-       <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-	   <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-</head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title><?php echo($POSName) . ': ' . TITLE; ?></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="user.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+  </head>
 <body>
+<div class="container"> 
 
 <?php include("includes/header.php"); ?>
 
-<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center">
+<table class="table">
  <tr>
   <td width="100%">
   
@@ -88,14 +106,14 @@ $Q_OrderCount = mysql_query("SELECT o.orders_id
 }
 
 ?>
- <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
+ <table class="table table-striped">
  <tr>
- <td width="100%" class="tdBlue" colspan="5" align="center">
+ <td width="100%" colspan="5" align="center">
   <b><?php echo(mysql_num_rows($Q_OrderCount)); ?><?php echo ORDER_COUNT; ?></b>
  </td>
  </tr>
  <tr>
- <td width="100%" class="tdBlue" colspan="5">
+ <td width="100%" colspan="5">
   <b><?php echo PAGES; ?></b>
   <?php
   for($i=0;$i<mysql_num_rows($Q_OrderCount);$i+=LISTPERPAGE){
@@ -107,22 +125,22 @@ $Q_OrderCount = mysql_query("SELECT o.orders_id
  </td>
  </tr>
  <tr>
- <td width="120" class="tdBlue" align="center"><b><?php echo INVOICE_NUMBER; ?></b></td>
- <td width="150" class="tdBlue" align="center"><a href="order_history.php?page=<?php echo($_REQUEST['page']); ?>&order=<?php if($_REQUEST['order']=="dpDESC"){ echo("dpASC"); }else{ echo("dpDESC"); } ?>">Order Date</a></td>
- <td width="250" class="tdBlue" align="center"><b><?php echo CUSTOMER_NAME; ?></b></td>
- <td width="170" class="tdBlue" align="center"><b><?php echo PAYMENT_METHOD; ?></b></td>
- <td width="100" class="tdBlue" align="center"><a href="order_history.php?page=<?php echo($_REQUEST['page']); ?>&order=<?php if($_REQUEST['order']=="otDESC"){ echo("otASC"); }else{ echo("otDESC"); } ?>"><?php echo ORDER_TOTAL; ?></a></td>
+ <td width="15%" align="center"><b><?php echo INVOICE_NUMBER; ?></b></td>
+ <td width="19%" align="center"><a href="order_history.php?page=<?php echo($_REQUEST['page']); ?>&order=<?php if($_REQUEST['order']=="dpDESC"){ echo("dpASC"); }else{ echo("dpDESC"); } ?>">Order Date</a></td>
+ <td width="32%" align="center"><b><?php echo CUSTOMER_NAME; ?></b></td>
+ <td width="21%" align="center"><b><?php echo PAYMENT_METHOD; ?></b></td>
+ <td width="13%" align="center"><a href="order_history.php?page=<?php echo($_REQUEST['page']); ?>&order=<?php if($_REQUEST['order']=="otDESC"){ echo("otASC"); }else{ echo("otDESC"); } ?>"><?php echo ORDER_TOTAL; ?></a></td>
  </tr>
 <?php 
     if (mysql_num_rows($Q_Order)) {
         while($R_Order = mysql_fetch_assoc($Q_Order)) { ?>
  <tr>
- <td width="120" class="tdBlue" align="center">
+ <td width="15%" align="center">
  <?php
  	echo("<a href=\"order.php?OrderID=" . $R_Order['orders_id'] . "\">" . $R_Order['orders_id'] . "</a>");
  ?>
  </td>
- <td width="150" class="tdBlue" align="center">
+ <td width="19%" align="center">
  <?php
  	$DateExp = explode(" ",$R_Order['date_purchased']);
 	$Time = $DateExp[1];
@@ -130,15 +148,15 @@ $Q_OrderCount = mysql_query("SELECT o.orders_id
  	echo("$DateExp[1]-$DateExp[2]-$DateExp[0] $Time");
  ?>
  </td>
- <td width="250" align="center">
+ <td width="32%" align="center">
   <?php if(!$R_Order['customers_name']){ ?>
   <b><?php echo("<?php echo IN_STORE_CUSTOMER; ?>"); ?></b>
   <?php }else{ ?>
   <a href="customer.php?CustomerID=<?php echo($R_Order['customers_id']); ?>"><?php echo($R_Order['customers_name']); ?></a>
   <?php } ?>
  </td>
- <td width="170" align="center"> <?php echo($R_Order['payment_method']); ?> </td>
- <td width="100" align="center">
+ <td width="21%" align="center"> <?php echo($R_Order['payment_method']); ?> </td>
+ <td width="13%" align="center">
   <?php echo $default_currency_symbol; ?><?php echo(number_format($R_Order['value'], 2, '.', '')); ?>
  </td>
  </tr>
@@ -146,7 +164,7 @@ $Q_OrderCount = mysql_query("SELECT o.orders_id
     } 
 ?>
  <tr>
- <td width="100%" class="tdBlue" colspan="5">
+ <td width="100%" colspan="5">
   <b>Pages:</b>
   <?php
   for($i=0;$i<mysql_num_rows($Q_OrderCount);$i+=LISTPERPAGE){
@@ -163,8 +181,14 @@ $Q_OrderCount = mysql_query("SELECT o.orders_id
   </td>
  </tr>
 </table>
-
-
-<?php include("includes/footer.php"); ?>
-</body>
+	  <footer class="footer">
+        <?php include("includes/footer.php"); ?>
+      </footer>
+    </div> <!-- /container -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	<!-- include jquery and bootstrap -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  </body>
 </html>
