@@ -95,108 +95,113 @@ if (isset($_POST['update'])) {
 }
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-       <title><?php echo($POSName) . ': ' . TITLE; ?></title>
-       <link rel="Stylesheet" href="css/style.css">
-       <script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title><?php echo($POSName) . ': ' . TITLE; ?></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="user.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
+	<script src="ckeditor/ckeditor.js"></script>
 </head>
 <body>
+  <div class="container">
+    <?php include("includes/header.php"); ?>
 
-<?php include("includes/header.php"); ?>
-
-<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center">
- <tr>
-  <td width="100%">
 <?php
   if (isset($_POST['update'])) { 
 	  if ($SUCCESS=true) {
-		  echo '<center><b><font color="green">' . UPDATED_SUCCESS . '</b></font></center><br>';
+		  echo '<div class="alert alert-success text-center" role="alert"><h3>' . UPDATED_SUCCESS . '</h3></div>';
 	  } else {
-		  echo '<center><b><font color="red">' . UPDATED_FAILED . '</b></font></center><br>';
+		  echo '<div class="alert alert-danger text-center" role="alert"><h3>' . UPDATED_FAILED . '</h3></div>';
 	  }
   }
+  
 ?>
- <table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
- <form name="ProductEdit" method="post">
- <input type="hidden" name="posted" value="true">
- <tr>
- <td width="100%" class="tdBlue" colspan="2" align="center">
-  <b><?php echo PRODUCT_INFO; ?>"<?php echo($R_Product['products_name']); ?>"</b>
- </td>
- </tr>
- <!--<tr>
- <td width="100%" colspan="2" align="center">
-  <div align="left">
-  <?php
-  //TestFormInput($_POST['posted'],$ReqVars);
-  ?>
-  </div>
- </td>
- </tr>
- -->
- <tr>
- <td width="20%" class="tdBlue"><b><?php echo PRODUCT_MODEL; ?></b></td>
- <td width="80%"><input type="text" name="products_model" size="15" value="<?php echo($R_Product['products_model']); ?>"></td>
- </tr>
- <tr>
- <td width="20%" class="tdBlue"><b><?php echo PRICE; ?></b></td>
- <td width="80%"><?php echo $default_currency_symbol; ?><input type="text" name="products_price" size="14" value="<?php echo(number_format(($R_Product['products_price']), 2, '.', '')); ?>"></td>
- </tr>
- <tr>
- <td width="20%" class="tdBlue"><b><?php echo QTY_IN_STOCK; ?></b></td>
- <td width="80%"><input type="text" name="products_quantity" size="15" value="<?php echo($R_Product['products_quantity']); ?>"></td>
- </tr>
- <!-- use this section if a reorder quantity contribution is installed
-  <tr>
- <td width="20%" class="tdBlue"><b>Quantity Reordered</b></td>
- <td width="80%"><input type="text" name="products_reorder_quantity" size="15" value="<?php echo($R_Product['products_reorder_quantity']); ?>"></td>
- </tr>
- --> 
- <tr>
- <td width="20%" class="tdBlue"><b><?php echo WEIGHT; ?></b></td>
- <td width="80%"><input type="text" name="products_weight" size="15" value="<?php echo($R_Product['products_weight']); ?>"> lbs.</td>
- </tr>
- <tr>
- <td width="100%" class="tdBlue" colspan="2" align="center">
-  <b><?php echo PRODUCT_DESCRIPTION; ?></b>
- </td>
- </tr>
- <tr>
- <td width="100%" colspan="2" align="center">
-  <textarea name="products_description" cols="140" rows="10"><?php echo($R_Product['products_description']); ?></textarea>
- </td>
- </tr>
-<?php
-  //  Display attributes form elements
-	if (use_attribs()) {
-?>	<tr>
-	<td width="100%" class="tdBlue" colspan=2 align="center"><table width="100%" cellspacing=0 cellpadding=0 border=0>
-<?php
-    echo $R_all_attribs->config_form($R_product_attribs);
-?>
-	</table>
-	</td>
-	</tr>
-<?php	  
-	} 
-?>
- <tr height="45px">
- <td width="100%" class="tdBlue" colspan="2" align="center"><br>
-      <input type="hidden" name="update" value="1">
-      <a class="button" title="<?php echo UPDATE_PRODUCT_BUTTON_TITLE; ?>" href="#"  onclick="this.blur(); document.ProductEdit.submit();"><span><?php echo UPDATE; ?></span></a>
-      <a class="button" title="<?php echo BACK_BUTTON_TITLE; ?>" href="#"  onclick="this.blur(); window.location.href='product.php?ProductID=<?php echo($R_Product['products_id']); ?>'"><span><?php echo BACK; ?></span></a>
- </td>
- </tr>
- </form>
- </table>
- 
- 
-  </td>
- </tr>
+<div class="alert alert-warning text-center" role="alert"><h3><?php echo PRODUCT_INFO; ?>"<?php echo($R_Product['products_name']); ?>"</h3></div>
+ <table width="100%" align="center">
+   <tr>
+     <td>
+	   <form name="ProductEdit" method="post" class="form-horizontal">
+		  <div class="form-group">
+			<label for="products_model" class="col-sm-2 control-label"><?php echo PRODUCT_MODEL; ?></label>
+			<div class="col-sm-10">
+			  <input  name="products_model" class="form-control" id="products_model" value="<?php echo($R_Product['products_model']); ?>" placeholder="<?php echo PRODUCT_MODEL; ?>">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="products_price" class="col-sm-2 control-label"><?php echo PRICE; ?></label>
+			<div class="col-sm-10">
+			  <input name="products_price" class="form-control" id="products_price" value="<?php echo(number_format(($R_Product['products_price']), 2, '.', '')); ?>" placeholder="<?php echo PRICE; ?>">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="products_quantity" class="col-sm-2 control-label"><?php echo QTY_IN_STOCK; ?></label>
+			<div class="col-sm-10">
+			  <input name="products_quantity" class="form-control" id="products_quantity" value="<?php echo($R_Product['products_quantity']); ?>" placeholder="<?php echo QTY_IN_STOCK; ?>">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="products_weight" class="col-sm-2 control-label"><?php echo WEIGHT; ?></label>
+			<div class="col-sm-10">
+			  <input name="products_weight" class="form-control" id="products_weight" value="<?php echo($R_Product['products_weight']); ?>" placeholder="<?php echo WEIGHT; ?>">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="products_description" class="col-sm-2 control-label"><?php echo PRODUCT_DESCRIPTION; ?></label>
+			<div class="col-sm-10">
+			  <textarea name="products_description" class="form-control ckeditor" id="products_description" placeholder="<?php echo PRODUCT_DESCRIPTION; ?>" rows="5"><?php echo($R_Product['products_description']); ?></textarea>
+			</div>
+		  </div>
+		  <div class="form-group">
+			<div class="col-sm-offset-4 col-sm-10">
+			<input type="hidden" name="update" value="1">
+			<a href="#" title="<?php echo UPDATE_PRODUCT_BUTTON_TITLE; ?>" onclick="this.blur(); document.ProductEdit.submit();" class="btn btn-success btn-default active" role="button"><?php echo UPDATE; ?></a>
+			<a href="#" title="<?php echo BACK_BUTTON_TITLE; ?>" onclick="this.blur(); window.location.href='product.php?ProductID=<?php echo($R_Product['products_id']); ?>'" class="btn btn-danger btn-default active" role="button"><?php echo BACK; ?></a>
+			
+			</div>
+		  </div>
+		  <?php
+		  //  Display attributes form elements
+			if (use_attribs()) {
+		?>	<div>
+		<?php
+			echo $R_all_attribs->config_form($R_product_attribs);
+		?>
+			</div>
+		<?php	  
+			} 
+		?>
+		</form>
+    </td>
+  </tr>
 </table><br><br>
-
-<?php include("includes/footer.php"); ?>
+	<script>
+       /*CKEDITOR.replace( 'products_description' );             
+       // resize the editor after it has been fully initialized
+       CKEDITOR.on('instanceLoaded', function(e) {e.editor.resize(700, 350)} );*/
+    </script>
+	  <footer class="footer">
+        <?php include("includes/footer.php"); ?>
+      </footer>
+    </div> <!-- /container -->
 </body>
 </html>

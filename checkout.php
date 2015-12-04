@@ -85,13 +85,13 @@ if (isset($_GET['clear_split_payments']) && $_GET['clear_split_payments'] == 'cl
             
 			switch(PayType) {
 				case "Cash":
-                popupStaticWindow('cash','cash_add.php?payment_method=' + PayType + '&bill_addr=' + BillAddr + '&ship_addr=' + ShipAddr,300,100);
+                popupStaticWindow('cash','cash_add.php?payment_method=' + PayType + '&bill_addr=' + BillAddr + '&ship_addr=' + ShipAddr,300,300);
                     break;
                 case "Check":
-                popupStaticWindow('check','check_add.php?payment_method=' + PayType + '&bill_addr=' + BillAddr + '&ship_addr=' + ShipAddr,300,120);
+                popupStaticWindow('check','check_add.php?payment_method=' + PayType + '&bill_addr=' + BillAddr + '&ship_addr=' + ShipAddr,300,300);
                     break;
                 case "Credit Card":
-                popupStaticWindow('cc','cc_add.php?payment_method=' + PayType + '&bill_addr=' + BillAddr + '&ship_addr=' + ShipAddr,300,120);
+                popupStaticWindow('cc','cc_add.php?payment_method=' + PayType + '&bill_addr=' + BillAddr + '&ship_addr=' + ShipAddr,300,300);
                     break;
                 case "AuthorizeNet":
                     popupStaticWindow('AuthorizeNet','authorizenet_aim.php?payment_method=' + PayType + '&bill_addr=' + BillAddr + '&ship_addr=' + ShipAddr,400,550);
