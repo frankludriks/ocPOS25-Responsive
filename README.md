@@ -1,4 +1,4 @@
 # ocPOS25-Responsive
 POS for oSCommerce (Responsive)
 
-Just started this project so don't download it yet!
+Still needs some work, but fully functional
