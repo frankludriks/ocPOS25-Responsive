@@ -8,7 +8,7 @@ define('NOBODY', '(Nobody)');
 define('QUANTITY_EXCEEDED', 'You have tried to increase the quantity of this item beyond the\nrecorded quantity in the database.\n\nIf you wish to add more of this item, you must edit the recorded\nquantity by clicking on its name and selecting:  Edit Product.');
 
 //PrintReceipt function strings
-define('INVOICE', 'Invoice #');
+define('INVOICE', 'Invoice:');
 define('NOT_PROCESSED', '(Not Processed)');
 define('SEPARATOR', '===================================');
 define('SUBTOTAL', 'Subtotal');

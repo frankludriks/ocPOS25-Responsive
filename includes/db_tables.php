@@ -30,6 +30,7 @@ define('SPECIALS', $table_prefix . 'specials');
 define('TAX_RATES', $table_prefix . 'tax_rates');
 define('TAX_CLASS', $table_prefix . 'tax_class');
 define('ZONES', $table_prefix . 'zones');
+define('GEO_ZONES', $table_prefix . 'geo_zones');
 define('ZONES_TO_GEO_ZONES', $table_prefix . 'zones_to_geo_zones');
 
 define('POS_ORDERS_PRODUCTS_ATTRIBUTES', $table_prefix . 'pos_orders_products_attributes');

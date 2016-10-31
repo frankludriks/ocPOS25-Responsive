@@ -1,4 +1,13 @@
 <?php 
+
+// check if valid login session, else require login
+$session->logged_in = $session->checkLogin();
+
+if(!$session->logged_in) {
+    header('Location: login.php');
+} else {
+    $logged_in = 1;
+}
 // includes/header.php
 // error level defined in include/functions.php
 
@@ -10,14 +19,7 @@ if (file_exists("includes/lang/$lang/includes/header.php")) {
 include 'functions_header.php';
 include 'custom_header.php';
 
-// check if valid login session, else require login
-$session->logged_in = $session->checkLogin();
 
-if(!$session->logged_in) {
-    header('Location: login.php');
-} else {
-    $logged_in = 1;
-}
 ?>
 <!-- header -->
 <div class="header clearfix">

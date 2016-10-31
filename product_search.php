@@ -234,6 +234,7 @@ $PRODUCT_SEARCH = $Query;
  <table class="table table-striped table-condensed table-hover">
  <tr>
    <thead>
+   <th width="100" align="left"><b>ID</b></th>
 	 <th width="100" align="left"><b><?php echo PRODUCT_MODEL; ?></b></th>
 	 <th width="350" align="center"><b><?php echo PRODUCT_NAME; ?></b></th>
 	 <th width="70"  align="center"><b><?php echo QTY_IN_STOCK; ?></b></th>
@@ -243,6 +244,9 @@ $PRODUCT_SEARCH = $Query;
  </tr>
 <?php while($R_Product = mysql_fetch_assoc($Q_Product)){ ?>
  <tr>
+	 <td align="left">
+	  <?php echo($R_Product['products_id']); ?>
+	 </td>
 	 <td align="left">
 	  <?php echo($R_Product['products_model']); ?>
 	 </td>

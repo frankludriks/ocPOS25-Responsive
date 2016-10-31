@@ -281,45 +281,49 @@ function GetProductTaxClassID($item_id) {
 
 // end function GetProductTaxClassID
 
-//Function GetTax
 function GetTax($product_id) {
 
 # This function needs to return a product's tax rate(s) and description(s).
 # For tax totaling reasons (think HST/GST/PST), we need to return an array
 #   with each tax_rates.tax_rate and tax_rates.tax_description that apply to this product
-#
+#   sort taxes by priority
 
-	$store_zone_id = GetStoreZoneID();
-	$country_query_sql = "select zone_country_id from " . ZONES . " where zone_id = '" . $store_zone_id . "'";
-	$country_id_query = mysql_query($country_query_sql);
-	$country_id_result = mysql_fetch_array($country_id_query);
-	$country_id = $country_id_result['zone_country_id'];
+    $store_zone_id = GetStoreZoneID();
 
     if ($product_id > 1000000000) {
-		$tax_lookup_sql = "select SUM(tax_rate) as tax_rate, tr.tax_priority, tr.tax_description from " . TAX_RATES . " tr left join " . ZONES_TO_GEO_ZONES . " za ON tr.tax_zone_id = za.geo_zone_id left join " . GEO_ZONES . " z ON z.geo_zone_id = tr.tax_zone_id WHERE (za.zone_country_id IS NULL OR za.zone_country_id = '0' OR za.zone_country_id = '" . (int)$country_id . "') AND (za.zone_id IS NULL OR za.zone_id = '0' OR za.zone_id = '" . (int)$store_id . "') GROUP BY tr.tax_priority";
+        $tax_lookup_sql = "SELECT tr.tax_rate, tr.tax_description, tax_priority
+                 FROM " . TAX_RATES . " tr
+                 JOIN " . ZONES_TO_GEO_ZONES . " z2g on z2g.geo_zone_id=tr.tax_zone_id
+                 JOIN " . ZONES . " z on z.zone_id=z2g.zone_id
+                 WHERE z.zone_id = '" . $store_zone_id . "'
+                 ORDER BY tax_priority ASC";
     } else {
-		$tax_lookup_sql = "select SUM(tax_rate) as tax_rate, tr.tax_priority, tr.tax_description from " . TAX_RATES . " tr left join " . PRODUCTS . " p on p.products_tax_class_id = tr.tax_class_id left join " . ZONES_TO_GEO_ZONES . " za ON tr.tax_zone_id = za.geo_zone_id left join " . GEO_ZONES . " z ON z.geo_zone_id = tr.tax_zone_id WHERE (za.zone_country_id IS NULL OR za.zone_country_id = '0' OR za.zone_country_id = '" . (int)$country_id . "') AND (za.zone_id IS NULL OR za.zone_id = '0' OR za.zone_id = '" . (int)$store_id . "') and p.products_id = '" . $product_id . "' GROUP BY tr.tax_priority";
-  
-		
+        $tax_lookup_sql = "SELECT tr.tax_rate, tr.tax_description, tax_priority
+                 FROM " . PRODUCTS . " p
+                 JOIN " . TAX_RATES . " tr on p.products_tax_class_id=tr.tax_class_id
+                 JOIN " . ZONES_TO_GEO_ZONES . " z2g on z2g.geo_zone_id=tr.tax_zone_id
+                 JOIN " . ZONES . " z on z.zone_id=z2g.zone_id
+                 WHERE z.zone_id = '" . $store_zone_id . "' and p.products_id = '" . $product_id . "'
+                 ORDER BY tax_priority ASC";
     }
-    
-	$tax_lookup_query = mysql_query($tax_lookup_sql) or die ("SQL Error. Tax detail lookup failure.  <br><br>SQL = $tax_lookup_sql");
-    
+
+    $tax_lookup_query = oc_query($tax_lookup_sql, 'SQL Error. Tax detail lookup failure.');
+
     $i = 0;
     $tax_array = array();
+
     while ($tax_lookup_result = mysql_fetch_array($tax_lookup_query)) {
         $tax_array[$i]['tax_description'] = $tax_lookup_result['tax_description'];
         $tax_array[$i]['tax_rate'] = $tax_lookup_result['tax_rate'];
-		$i++;
+        $tax_array[$i]['tax_priority'] = $tax_lookup_result['tax_priority'];
+        // $tax_array[$i]['tax_total'] = 0;
+        $i++;
     }
-	
-	
-    
-    return $tax_array;
 
+    return $tax_array;
 }
 
-//end Function GetTax 
+// end function GetTax
 
 function GetSortOrder($order_total_type = '') {
     $order_total_sql = "select configuration_value from " . CONFIGURATION . " where configuration_key = '" . $order_total_type . "'";
@@ -452,7 +456,7 @@ class Order {
                 " WHERE p.products_id = '" . $ProductID . "' AND pd.products_id = p.products_id" .
                 " AND ((s.expires_date >= '" . date("Y-m-d") . "') OR (s.expires_date LIKE '0001-01-01%') OR (s.expires_date LIKE '0000-00-00%') OR (s.expires_date IS NULL) ) AND pd.language_id = '" . $language_id . "' ";
 */
-        $QuantityQ = "SELECT p.products_id, p.products_quantity, p.products_tax_class_id, p.products_model, p.products_price, " .
+        $QuantityQ = "SELECT p.products_id, p.products_quantity, p.products_model, p.products_price, " .
                 "pd.products_name, s.specials_new_products_price, " .
                 "if ((s.specials_new_products_price is not NULL AND ((s.expires_date >= '" . date("Y-m-d") . "') OR (s.expires_date LIKE '0001-01-01%') OR (s.expires_date LIKE '0000-00-00%') OR (s.expires_date IS NULL) ) ), s.specials_new_products_price, p.products_price) as sales_price " .
                 " FROM " . PRODUCTS . " p " .
@@ -563,7 +567,7 @@ class Order {
                 } else {
                     $this->Items[$this->NextItemIndex]['Tax'] = 0;
                 }
-                $this->Items[$this->NextItemIndex]['TaxClassId'] = GetProductTaxClassID($R_Product['products_id']);
+                $this->Items[$this->NextItemIndex]['TaxClassId'] = '100';
                 $this->Items[$this->NextItemIndex]['PriceOveride'] = false;
                 $this->Items[$this->NextItemIndex]['NonInventory'] = false;
                 $this->Items[$this->NextItemIndex]['QuantityExceed'] = $QUANTITY_EXCEED;
@@ -662,7 +666,7 @@ class Order {
                     $this->Items[$this->NextItemIndex]['ProductPrice'] = $non_inventory_price;
                     $this->Items[$this->NextItemIndex]['SpecialPrice'] = $R_Product['specials_new_products_price'];
                     $this->Items[$this->NextItemIndex]['Price'] = $non_inventory_price;
-                    $this->Items[$this->NextItemIndex]['Tax'] = $non_inventory_tax_rate;
+                    // $this->Items[$this->NextItemIndex]['Tax'] = $non_inventory_tax_rate;
                     $this->Items[$this->NextItemIndex]['Tax'] = $tax_array;
                     $this->Items[$this->NextItemIndex]['PriceOveride'] = true;
                     $this->Items[$this->NextItemIndex]['NonInventory'] = true;
@@ -1276,17 +1280,16 @@ class Order {
                     </td>
                 </form>
             </tr>
-        <?php } 
-		  ?>
+        <?php } ?>
         <tr>
             <td width="100" class="tdBlue" align="center"><b><?php echo MODEL; ?></b></td>
             <td width="360" class="tdBlue" align="center"><b><?php echo NAME; ?></b></td>
             <td width="100" class="tdBlue" align="center"><b><?php echo PRICE; ?></b></td>
             <td width="100" class="tdBlue" align="center"><b><?php echo QUANTITY; ?></b></td>
-            
-                      <!--<td width="100" class="tdBlue" align="center"><b><?php  //echo TAX;  ?></b></td>
-                      <td width="100" class="tdBlue" align="center"><b><?php  //echo TAX_RATE;  ?></b></td>-->
-            
+            <!--
+                      <td width="100" class="tdBlue" align="center"><b><?php /* echo TAX; */ ?></b></td>
+                      <td width="100" class="tdBlue" align="center"><b><?php /* echo TAX_RATE; */ ?></b></td>
+            -->
             <td width="100" class="tdBlue" align="right"><b><?php echo TOTAL; ?></b></td>
         </tr>
         <?php
@@ -1359,7 +1362,7 @@ class Order {
                 ?>
 
                 <tr>
-                    <td width="100" align="center"><?php echo($val['ProductModel']); ?></td>
+                    <td width="100" align="center"><?php echo($val['ProductModel']); ?> TAX - <?php print_r($item_listing);	//echo $R_OrderProduct['tax_rate']; ?></td>
                     <td width="360">
                         <?php
                         if ($val['NonInventory']) {
@@ -1392,8 +1395,7 @@ class Order {
                     </td>
                     <td width="100" align="right">
                         <?php
-						//$tax = $val['Price']+GetTax('ProductID');
-                        echo(number_format($val['Price'], 2, '.', '')); //+$val['ProductTax']
+                        echo(number_format($val['Price'], 2, '.', ''));
                         // debug
                         // print_r($this->Items[$key]);
                         if (!$Checkout) {
@@ -1421,9 +1423,9 @@ class Order {
                             <a href="action.php?Action=DeleteItem&Index=<?php echo($key); ?>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                 <?php } ?>
                     </td>
-                    <!--<td width="100" align="center"><?php  //echo number_format($val['ProductTax'], 2, '.', '');  ?></td>
-                              <td width="100" align="center"><?php  //echo number_format($val['tax_rate'], 2, '.', '');  ?></td>-->
-                    
+                    <!--
+                              <td width="100" align="center"><?php /* echo number_format($val['ProductTax'], 2, '.', ''); */ ?></td>
+                    -->
                     <td width="100" align="right"><?php echo(number_format(($val['Price'] * $val['Quantity']), 2, '.', '')); ?></td>
                 </tr>
                 <?php
@@ -1990,7 +1992,7 @@ class Order {
         // check to see if there is an order discount
         if ((is_numeric($this->DiscountValue)) && ($this->DiscountValue != 0)) {
             if ($this->DiscountMethod == 'absolute') { // normal discount
-                $discount_value = $this->DiscountValue;
+                $Discount_value = $this->DiscountValue;
             } else { // percentage discount
                 // have to get original total to know how much the discount amount is
                 $original_total = $this->SubTotal / (1 - ($this->DiscountValue * .01));
@@ -2109,7 +2111,7 @@ class Order {
         mysql_query("INSERT INTO " . ORDERS_TOTAL . " SET
 			orders_id ='" . $this->OrderID . "',
 			title = '" . OT_TITLE_TOTAL . "',
-			text = '<b> " . $default_currency_symbol . "" . $this->Total . "</b>',
+			text = '<b> " . $default_currency_symbol . " " . $this->Total . "</b>',
 			value = '" . $this->Total . "',
 			cash = '" . $this->Cash . "',
 			class = 'ot_total',

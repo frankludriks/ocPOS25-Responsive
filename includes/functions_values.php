@@ -25,7 +25,7 @@ if(mysql_num_rows(mysql_query("SHOW TABLES LIKE '" . CUSTOMERS . "'")) == 0) {
 if (!isset($failed)) {
 
     // get the store address for receipts
-    $StoreAddress_query = mysql_query("select configuration_value from " . CONFIGURATION . " where configuration_key = 'STORE_NAME_ADDRESS'");
+    $StoreAddress_query = mysql_query("select configuration_value from " . CONFIGURATION . " where configuration_key = 'STORE_ADDRESS'");
     $StoreAddress_results = mysql_fetch_array($StoreAddress_query);
     $StoreAddress = $StoreAddress_results[0];
 
@@ -36,7 +36,7 @@ if (!isset($failed)) {
     $StoreName_query = mysql_query("select configuration_value from " . CONFIGURATION . " where configuration_key = 'STORE_NAME'");
     $StoreName_results = mysql_fetch_array($StoreName_query);
     $StoreName = $StoreName_results[0];
-    $POSName = $StoreName . ' - OllaCart Point of Sale';
+    $POSName = $StoreName . ' - OllaCart POS';
 
     // get store administrator email address for out of stock emails
     // can override this value and reduce overhead by commenting out the next 3 lines then adding a new line that just defines the $StoreOwner variable

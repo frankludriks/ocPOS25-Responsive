@@ -1392,8 +1392,7 @@ class Order {
                     </td>
                     <td width="100" align="right">
                         <?php
-						//$tax = $val['Price']+GetTax('ProductID');
-                        echo(number_format($val['Price'], 2, '.', '')); //+$val['ProductTax']
+                        echo(number_format($val['Price']+$val['ProductTax'], 2, '.', ''));
                         // debug
                         // print_r($this->Items[$key]);
                         if (!$Checkout) {
@@ -2109,7 +2108,7 @@ class Order {
         mysql_query("INSERT INTO " . ORDERS_TOTAL . " SET
 			orders_id ='" . $this->OrderID . "',
 			title = '" . OT_TITLE_TOTAL . "',
-			text = '<b> " . $default_currency_symbol . "" . $this->Total . "</b>',
+			text = '<b> " . $default_currency_symbol . " " . $this->Total . "</b>',
 			value = '" . $this->Total . "',
 			cash = '" . $this->Cash . "',
 			class = 'ot_total',

@@ -268,25 +268,46 @@ if (isset($_GET['cPath'])) {
 }
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <link rel="icon" href="favicon.ico">
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
-<title>All Products</title>
-<link rel="Stylesheet" href="css/style.css">
+    <title><?php echo($POSName) . ': ' . TITLE; ?></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="user.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script language="JavaScript" src="javascript.js" type="text/javascript"></script>
 
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" onload="SetFocus();">
-<?php include("includes/header.php"); ?>
+  <div class="container">
+    <?php include("includes/header.php"); ?>
 <div id="spiffycalendar" class="text"></div>
 
-<table class="tableBorder" border="0" width="760" cellpadding="2" cellspacing="1" align="center">
+<table class="table table-striped table-condensed table-hover" align="center">
     <tr>
-        <td class="tdBlue" align="center" width="400"><b><?php echo tep_get_category_name($parent_category_id, 1, 1); ?></b></td>
-        <td class="tdBlue" align="center" width="100"><b>Model Number</b></td>
-        <td class="tdBlue" align="center" width="70"><b>Size</b></td>
-        <td class="tdBlue" align="center" width="70"><b>Quantity in Stock</b></td>
+	  <thead>
+        <th align="left"><b><?php echo tep_get_category_name($parent_category_id, 1, 1); ?></b></td>
+        <th align="center"><b>Model Number</b></td>
+        <!--<td align="center" width="70"><b>Size</b></td>-->
+        <th align="center"><b>Quantity in Stock</b></td>
+	  </thead>
     </tr>
 <?php    
     // $products_stock_table = GetProductStockTableName();
@@ -316,7 +337,7 @@ if (isset($_GET['cPath'])) {
         $catname = $categories['categories_name'];
       }
 ?>
-        <td class="dataTableContent"><?php echo '<a href="' . tep_href_link('allprods.php', tep_get_path($categories['categories_id'])) . '"><img src="images/folder.gif" border="0"></a>&nbsp;<b>' . $catname . '</b>'; ?></td>
+        <td><?php echo '<a href="' . tep_href_link('allprods.php', tep_get_path($categories['categories_id'])) . '"><span class="glyphicon glyphicon-folder-close"</span></a>&nbsp;<b>' . $catname . '</b>'; ?></td>
         <td align="center">&nbsp;</td>
         <td align="center">&nbsp;</td>
         <td align="center">&nbsp;</td>
@@ -339,24 +360,24 @@ if (isset($_GET['cPath'])) {
         <td class="dataTableContent"><a href="product.php?ProductID=<?php echo $products['products_id']; ?>"><?php echo $products['products_name']; ?></a></td>
 <!-- show model number -->
         <td align="center"><?php echo $products['products_model']; ?></td>
-        <td align="right">&nbsp;</td>
-        <td align="right">&nbsp;</td>
+       <!-- <td align="right">&nbsp;</td>-->
+        <td align="center"><?php echo $products['products_quantity']; ?></td>
     </tr>
 <!-- show products in stock -->
 <?php
 
       
-      $products_stock_query = mysql_query("SELECT ps.products_stock_attributes, ps.products_stock_quantity, pov.products_options_values_name FROM " . PRODUCTS_STOCK . " ps,  " . PRODUCTS_OPTIONS_VALUES . " pov WHERE pov.products_options_values_id = substring(ps.products_stock_attributes,3) AND ps.products_id = '" . $products['products_id'] . "'");
+    /*  $products_stock_query = mysql_query("SELECT ps.products_stock_attributes, ps.products_stock_quantity, pov.products_options_values_name FROM " . PRODUCTS_STOCK . " ps,  " . PRODUCTS_OPTIONS_VALUES . " pov WHERE pov.products_options_values_id = substring(ps.products_stock_attributes,3) AND ps.products_id = '" . $products['products_id'] . "'");
       
       while ($products_stock_results = mysql_fetch_array($products_stock_query)) {
         $products_by_size_count++;
         $in_stock_count += $products_stock_results['products_stock_quantity'];
         echo '    <tr>' . "\n";
         echo '        <td colspan="2">&nbsp;</td>'. "\n";
-        echo '        <td align="center">' . $products_stock_results['products_options_values_name'] . '</td>'. "\n";
+        echo '        <td align="center">' . $products_stock_results['products_options_values_name'] . '55</td>'. "\n";
         echo '        <td align="center">' . $products_stock_results['products_stock_quantity'] . '</td>'. "\n";
         echo '    </tr>';
-        } 
+        } */
 ?>
 <?php
     }
@@ -375,28 +396,44 @@ if (isset($_GET['cPath'])) {
     $cPath_back = (tep_not_null($cPath_back)) ? 'cPath=' . $cPath_back . '&' : '';
 ?>
     <tr>
-        <td class="tdBlue" colspan="4" align="right">&nbsp;</td>
+        <td colspan="4" align="right">&nbsp;</td>
     </tr>
     <tr>
-        <td class="tdBlue" colspan="2" align="right">Products by Size</td>
-        <td class="tdBlue" align="center"><b><?php echo $products_by_size_count; ?></b></td>
-        <td class="tdBlue" align="right">&nbsp;</td>
+        <td colspan="2" align="right">Products by Size</td>
+        <td align="center"><b><?php echo $products_by_size_count; ?></b></td>
+        <td align="right">&nbsp;</td>
     </tr>
     <tr>
-        <td class="tdBlue" colspan="2" align="right">Total Units In Stock</td>
-        <td class="tdBlue" align="right">&nbsp;</td>
-        <td class="tdBlue" align="center"><b><?php echo $in_stock_count; ?></b></td>
+        <td colspan="2" align="right">Total Units In Stock</td>
+        <td align="right">&nbsp;</td>
+        <td align="center"><b><?php echo $in_stock_count; ?></b></td>
     </tr>
 
   <tr>
     <td colspan="4"><table border="0" width="100%" cellspacing="0" cellpadding="2">
       <tr>
         <td class="smallText"><br><br><?php echo 'Categories&nbsp;' . $categories_count . '<br>' . 'Products&nbsp;' . $products_count; ?></td>
-        <td align="right" class="smallText"><?php if (sizeof($cPath_array) > 0) echo '<a href="' . tep_href_link('allprods.php', $cPath_back . 'cID=' . $current_category_id) . '">' . tep_image_button('button_back.gif', 'Back') . '</a>&nbsp;'; ?>&nbsp;</td>
+        <td align="right" class="smallText"><?php if (sizeof($cPath_array) > 0) {
+			echo '<a href="' . tep_href_link('allprods.php', $cPath_back . 'cID=' . $current_category_id) . '">button</a>&nbsp;'; 
+			} else {
+				echo '<button onclick="goBack()">Go Back</button>';
+			}
+			?>
+			
+			</td>
+		
       </tr>
     </table></td>
   </tr>
 </table>
-<?php include("includes/footer.php"); ?>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+	  <footer class="footer">
+        <?php include("includes/footer.php"); ?>
+      </footer>
+    </div> <!-- /container -->
 </body>
 </html>
